@@ -47,7 +47,6 @@ public final class SwiftTickerView: GLKView {
     }
     public var separator: String?
     public var distanceBetweenNodes: CGFloat = 8
-    public var tickerDelegate: SwiftTickerDelegate?
     public var provider: SwiftTickerProviderProtocol?
     public private(set) var isRunning = false
     
@@ -55,13 +54,18 @@ public final class SwiftTickerView: GLKView {
     private var displayLink: CADisplayLink?
     private var nodeViews = [UIView]()
     
-    @IBOutlet weak var button: UIButton!
     
+    public weak var tickerDelegate: SwiftTickerDelegate?
+    @IBOutlet public weak var button: UIButton!
+
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        setupUI()
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        setupUI()
     }
     
     public override init(frame: CGRect) {
@@ -77,7 +81,11 @@ public final class SwiftTickerView: GLKView {
     
     public func start() {
         tickerDelegate?.tickerView(willStart: self)
-        renewDisplayLink()
+        if isRunning {
+            renewDisplayLink()
+        } else {
+            resume()
+        }
     }
     
     public func stop() {
@@ -108,19 +116,20 @@ public final class SwiftTickerView: GLKView {
                                                object: nil)
         
         if button == nil {
-            button = UIButton(type: .custom)
-            button.frame = bounds
+            let button = UIButton(frame: bounds)
             addSubview(button)
-            button.addTarget(self,
-                             action: #selector(button(touchedDown:)),
-                             for: .touchDown)
-            button.addTarget(self,
-                             action: #selector(button(touchedUpInside:with:)),
-                             for: .touchUpInside)
-            button.addTarget(self,
-                             action: #selector(button(touchedUpOutside:)),
-                             for: .touchUpOutside)
+            self.button = button
         }
+        
+        button.addTarget(self,
+                         action: #selector(button(touchedDown:)),
+                         for: .touchDown)
+        button.addTarget(self,
+                         action: #selector(button(touchedUpInside:with:)),
+                         for: .touchUpInside)
+        button.addTarget(self,
+                         action: #selector(button(touchedUpOutside:)),
+                         for: .touchUpOutside)
     }
     
     @objc private func application(willResignActive application: UIApplication) {
@@ -168,7 +177,8 @@ public final class SwiftTickerView: GLKView {
             return
         }
         
-        render()
+        //display()
+        updateTickerNodeViewPosition()
     }
     
     private func update(node: UIView) {
@@ -262,6 +272,7 @@ public final class SwiftTickerView: GLKView {
         
         addSubview(nodeView)
         align(next: nodeView)
+        nodeViews.append(nodeView)
     }
     
     private func align(next nodeView: UIView) {
@@ -271,14 +282,14 @@ public final class SwiftTickerView: GLKView {
             if let last = nodeViews.last {
                 frame.origin.x = last.frame.maxX + distanceBetweenNodes
             } else {
-                frame.origin.x = frame.maxX
+                frame.origin.x = self.frame.maxX
             }
             frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
         case .horizontalLeftToRight:
             if let last = nodeViews.last {
-                frame.origin.x = last.frame.minX - distanceBetweenNodes
+                frame.origin.x = last.frame.minX - distanceBetweenNodes - frame.width
             } else {
-                frame.origin.x = 0
+                frame.origin.x = -frame.width
             }
             frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
         case .verticalBottomToTop:
@@ -290,9 +301,9 @@ public final class SwiftTickerView: GLKView {
             frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
         case .verticalTopToBottom:
             if let last = nodeViews.last {
-                frame.origin.y = last.frame.minY - distanceBetweenNodes
+                frame.origin.y = last.frame.minY - distanceBetweenNodes - frame.height
             } else {
-                frame.origin.y = 0
+                frame.origin.y = -frame.height
             }
             frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
         }
@@ -300,10 +311,6 @@ public final class SwiftTickerView: GLKView {
     }
     
     fileprivate func updateTickerNodeViewPosition() {
-        guard !nodeViews.isEmpty else {
-            return
-        }
-        
         nodeViews.forEach({[weak self] in
             self?.update(node: $0)
         })
