@@ -273,24 +273,28 @@ public final class SwiftTickerView: GLKView {
             } else {
                 frame.origin.x = frame.maxX
             }
+            frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
         case .horizontalLeftToRight:
             if let last = nodeViews.last {
                 frame.origin.x = last.frame.minX - distanceBetweenNodes
             } else {
                 frame.origin.x = 0
             }
+            frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
         case .verticalBottomToTop:
             if let last = nodeViews.last {
                 frame.origin.y = last.frame.maxY + distanceBetweenNodes
             } else {
                 frame.origin.y = frame.maxY
             }
+            frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
         case .verticalTopToBottom:
             if let last = nodeViews.last {
                 frame.origin.y = last.frame.minY - distanceBetweenNodes
             } else {
                 frame.origin.y = 0
             }
+            frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
         }
         nodeView.frame = frame
     }
