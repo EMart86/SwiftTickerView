@@ -9,34 +9,20 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftTickerView'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of SwiftTickerView.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
+  s.summary          = 'A simple news ticker view'
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+A swift ticker, written in swift. The one, with those '+++' separators ;)
                        DESC
 
-  s.homepage         = 'https://github.com/eberl_ma@gmx.at/SwiftTickerView'
+  s.homepage         = 'https://github.com/EMart86/SwiftTickerView'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'eberl_ma@gmx.at' => 'martin.eberl@styria.com' }
-  s.source           = { :git => 'https://github.com/eberl_ma@gmx.at/SwiftTickerView.git', :tag => s.version.to_s }
+  s.author           = { 'Martin Eberl' => 'eberl_ma@gmx.at' }
+  s.source           = { :git => 'https://github.com/EMart86/SwiftTickerView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
   s.source_files = 'SwiftTickerView/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'SwiftTickerView' => ['SwiftTickerView/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
 end
