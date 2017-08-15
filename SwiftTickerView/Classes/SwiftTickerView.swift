@@ -57,10 +57,11 @@ public final class SwiftTickerView: GLKView {
     
     public weak var tickerDelegate: SwiftTickerDelegate?
     @IBOutlet public weak var button: UIButton!
-
+    
     public override func awakeFromNib() {
         super.awakeFromNib()
         
+        setupOpenGl()
         setupUI()
     }
     
@@ -101,9 +102,17 @@ public final class SwiftTickerView: GLKView {
     
     //MARK: - Private
     
+    private func setupOpenGl() {
+        
+        context = EAGLContext(api: .openGLES2)
+        drawableColorFormat = .RGBA8888
+        EAGLContext.setCurrent(self.context)
+        enableSetNeedsDisplay = true
+        setNeedsDisplay()
+    }
+    
     private func setupUI() {
         self.delegate = self
-        enableSetNeedsDisplay = false
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(didBecomeActive:)),
@@ -177,8 +186,7 @@ public final class SwiftTickerView: GLKView {
             return
         }
         
-        //display()
-        updateTickerNodeViewPosition()
+        display()
     }
     
     private func update(node: UIView) {
@@ -314,7 +322,7 @@ public final class SwiftTickerView: GLKView {
         nodeViews.forEach({[weak self] in
             self?.update(node: $0)
         })
-            
+        
         removeNodeIfNeeded(nodeViews.first)
         addNewNodeIfNeeded()
     }
@@ -337,6 +345,7 @@ extension SwiftTickerView: GLKViewDelegate {
                      GLfloat(g),
                      GLfloat(b),
                      GLfloat(a))
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT));
         
         updateTickerNodeViewPosition()
     }
