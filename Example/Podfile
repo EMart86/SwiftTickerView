@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SwiftTickerView_Example' do
+  pod 'SwiftTickerView', :path => '../'
+
+  target 'SwiftTickerView_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
