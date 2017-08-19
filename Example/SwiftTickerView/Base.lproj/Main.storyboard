@@ -29,7 +29,7 @@
                                     <constraint firstAttribute="height" constant="128" id="8rq-TO-HZW"/>
                                 </constraints>
                             </glkView>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="a1W-dw-l2C">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1000" translatesAutoresizingMaskIntoConstraints="NO" id="a1W-dw-l2C">
                                 <rect key="frame" x="14" y="318" width="347" height="31"/>
                                 <connections>
                                     <action selector="onValueChange:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Oik-LT-6oO"/>

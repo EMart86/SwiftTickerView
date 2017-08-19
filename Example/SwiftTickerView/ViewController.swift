@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func onValueChange(_ sender: Any) {
-        tickerView.framesPerSecond = Int(slider.value)
+        tickerView.pixelPerSecond = CGFloat(slider.value)
     }
 }
 

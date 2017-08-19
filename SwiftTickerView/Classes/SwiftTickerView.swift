@@ -29,6 +29,7 @@ public protocol SwiftTickerViewProvider {
 public final class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
+    private let interval = 60
     public enum Direction {
         case horizontalLeftToRight
         case horizontalRightToLeft
@@ -43,15 +44,7 @@ public final class SwiftTickerView: GLKView {
         }
     }
     
-    public var framesPerSecond: Int = 10 {
-        didSet {
-            if #available(iOS 10.0, *) {
-                displayLink?.preferredFramesPerSecond = framesPerSecond
-            } else {
-                displayLink?.frameInterval = framesPerSecond
-            }
-        }
-    }
+    public var pixelPerSecond: CGFloat = 60
     public var separator: String?
     private var separatorView: UIView.Type?
     private var separatorNib: UINib?
@@ -90,7 +83,7 @@ public final class SwiftTickerView: GLKView {
     }
     
     deinit {
-        stop()
+        displayLink?.invalidate()
     }
     
     public func start() {
@@ -109,8 +102,7 @@ public final class SwiftTickerView: GLKView {
         
         tickerDelegate?.tickerView(willStop: self)
         isRunning = false
-        displayLink?.remove(from: RunLoop.current, forMode: .commonModes)
-        displayLink = nil
+        displayLink?.isPaused = true
     }
     
     public func registerView(for separator: UIView.Type) {
@@ -235,14 +227,17 @@ public final class SwiftTickerView: GLKView {
     }
     
     private func renewDisplayLink() {
-        guard displayLink == nil else { return }
+        guard displayLink == nil else {
+            displayLink?.isPaused = false
+            return
+        }
         
         displayLink = CADisplayLink(target: self,
                                     selector: #selector(render))
         if #available(iOS 10.0, *) {
-            displayLink?.preferredFramesPerSecond = framesPerSecond
+            displayLink?.preferredFramesPerSecond = interval
         } else {
-            displayLink?.frameInterval = framesPerSecond
+            displayLink?.frameInterval = interval
         }
         displayLink?.add(to: RunLoop.current, forMode:.commonModes)
     }
@@ -266,17 +261,17 @@ public final class SwiftTickerView: GLKView {
         display()
     }
     
-    private func update(node: UIView) {
+    private func update(node: UIView, offset: CGFloat) {
         var frame = node.frame
         switch direction {
         case .horizontalRightToLeft:
-            frame.origin.x -= 1
+            frame.origin.x -= offset
         case .horizontalLeftToRight:
-            frame.origin.x += 1
+            frame.origin.x += offset
         case .verticalBottomToTop:
-            frame.origin.y -= 1
+            frame.origin.y -= offset
         case .verticalTopToBottom:
-            frame.origin.y += 1
+            frame.origin.y += offset
         }
         node.frame = frame
     }
@@ -408,9 +403,18 @@ public final class SwiftTickerView: GLKView {
         nodeView.frame = frame
     }
     
+    private var framesPerSecond: Int {
+        guard let displayLink = displayLink,
+            displayLink.duration > 0 else {
+            return 0
+        }
+        return Int(round(1000 / displayLink.duration)/1000)
+    }
+    
     fileprivate func updateTickerNodeViewPosition() {
+        let offset = pixelPerSecond / CGFloat(framesPerSecond)
         nodeViews.forEach({[weak self] in
-            self?.update(node: $0.view)
+            self?.update(node: $0.view, offset: offset)
         })
         
         removeNodeIfNeeded(nodeViews.first?.view)
