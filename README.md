@@ -20,6 +20,8 @@ it, simply add the following line to your Podfile:
 pod 'SwiftTickerView'
 ```
 
+
+
 ## Author
 
 eberl_ma@gmx.at, martin.eberl@styria.com

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		254CD842D676F8AAAC0D88D3 /* Pods_SwiftTickerView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2C47842D2FE848BA1C1705 /* Pods_SwiftTickerView_Tests.framework */; };
 		58CD96BE1F4393AC00376774 /* TickerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CD96BD1F4393AC00376774 /* TickerProvider.swift */; };
+		58CD96C01F48C5B500376774 /* NodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58CD96BF1F48C5B500376774 /* NodeView.xib */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		407CCF1F04F14349BEC98CBF /* Pods-SwiftTickerView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftTickerView_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftTickerView_Tests/Pods-SwiftTickerView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		49F13E1FBEA42677967F28B7 /* Pods-SwiftTickerView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftTickerView_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftTickerView_Tests/Pods-SwiftTickerView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		58CD96BD1F4393AC00376774 /* TickerProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TickerProvider.swift; sourceTree = "<group>"; };
+		58CD96BF1F48C5B500376774 /* NodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeView.xib; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* SwiftTickerView_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTickerView_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				58CD96BD1F4393AC00376774 /* TickerProvider.swift */,
+				58CD96BF1F48C5B500376774 /* NodeView.xib */,
 			);
 			name = "Example for SwiftTickerView";
 			path = SwiftTickerView;
@@ -253,6 +256,7 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				58CD96C01F48C5B500376774 /* NodeView.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
