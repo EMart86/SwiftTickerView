@@ -10,39 +10,60 @@ import UIKit
 import SwiftTickerView
 
 class ViewController: UIViewController {
-    
+    fileprivate let labelIdentifier = "TextMessage"
     @IBOutlet weak var tickerView: SwiftTickerView!
 
+    @IBOutlet weak var slider: UISlider!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tickerView.provider = TickerProvider()
+        tickerView.contentProvider = TickerProvider()
+        tickerView.viewProvider = self
         tickerView.separator = "+++"
+        tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
         tickerView.direction = .horizontalRightToLeft
         tickerView.tickerDelegate = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         tickerView.start()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tickerView.stop()
     }
 
+    @IBAction func onValueChange(_ sender: Any) {
+        tickerView.pixelPerSecond = CGFloat(slider.value)
+    }
 }
 
 extension ViewController: SwiftTickerDelegate {
     func tickerView(willResume ticker: SwiftTickerView) {}
     func tickerView(willStart ticker: SwiftTickerView) {}
     func tickerView(willStop ticker: SwiftTickerView) {}
-    
-    func tickerView(_ tickerView: SwiftTickerView, viewFor: Any) -> UIView {
-        var frame = tickerView.frame
-        frame.size.width = 50
-        frame.size.height -= 16
-        
-        let view = UIView(frame: frame)
-        view.backgroundColor = .blue
-        return view
+    func tickerView(didPress view: UIView, content: Any?) {}
+}
+
+extension ViewController: SwiftTickerViewProvider {
+    func tickerView(_ tickerView: SwiftTickerView, prepareSeparator separator: UIView) {
+        if let separator = separator as? UILabel {
+            separator.textColor = .white
+        }
+    }
+
+    func tickerView(_ tickerView: SwiftTickerView, viewFor: Any) -> (UIView, reuseIdentifier: String?) {
+        if let text = viewFor as? String,
+            let label = tickerView.dequeReusableNodeView(for: labelIdentifier) as? UILabel {
+            label.text = text
+            label.sizeToFit()
+            label.textColor = .white
+            return (label, reuseIdentifier: labelIdentifier)
+        }
+        return (UIView(), reuseIdentifier: nil)
     }
 }

@@ -8,6 +8,7 @@
 
 import GLKit
 
+
 public protocol SwiftTickerProviderProtocol {
     var hasContent: Bool { get }
     var next: Any { get }
@@ -17,11 +18,18 @@ public protocol SwiftTickerDelegate: class {
     func tickerView(willResume ticker: SwiftTickerView)
     func tickerView(willStart ticker: SwiftTickerView)
     func tickerView(willStop ticker: SwiftTickerView)
-    
-    func tickerView(_ tickerView: SwiftTickerView, viewFor: Any) -> UIView
+    func tickerView(didPress view: UIView, content: Any?)
+}
+
+public protocol SwiftTickerViewProvider {
+    func tickerView(_ tickerView: SwiftTickerView, prepareSeparator separator: UIView)
+    func tickerView(_ tickerView: SwiftTickerView, viewFor: Any) -> (UIView, reuseIdentifier: String?)
 }
 
 public final class SwiftTickerView: GLKView {
+    private let separatorIdentifier = "SeparatorIdentifier"
+    private let dontReuseIdentifier = "DontReuseIdentifier"
+    private let interval = 60
     public enum Direction {
         case horizontalLeftToRight
         case horizontalRightToLeft
@@ -36,26 +44,24 @@ public final class SwiftTickerView: GLKView {
         }
     }
     
-    public var frameInterval: Int = 1 {
-        didSet {
-            if #available(iOS 10.0, *) {
-                displayLink?.preferredFramesPerSecond = frameInterval / 10
-            } else {
-                displayLink?.frameInterval = frameInterval
-            }
-        }
-    }
+    public var pixelPerSecond: CGFloat = 60
     public var separator: String?
+    private var separatorView: UIView.Type?
+    private var separatorNib: UINib?
+    
     public var distanceBetweenNodes: CGFloat = 8
-    public var provider: SwiftTickerProviderProtocol?
     public private(set) var isRunning = false
     
     private var lastNodeWasSeparator: Bool = false
     private var displayLink: CADisplayLink?
-    private var nodeViews = [UIView]()
+    private var nodeViews = [(key: String, view: UIView, content: Any?)]()
+    private var reusableNodeViews = [(key: String, view: UIView)]()
+    private var registeredNodeViews = [String: Any]()
     
-    
+    public var contentProvider: SwiftTickerProviderProtocol?
+    public var viewProvider: SwiftTickerViewProvider?
     public weak var tickerDelegate: SwiftTickerDelegate?
+    
     @IBOutlet public weak var button: UIButton!
     
     public override func awakeFromNib() {
@@ -77,7 +83,7 @@ public final class SwiftTickerView: GLKView {
     }
     
     deinit {
-        stop()
+        displayLink?.invalidate()
     }
     
     public func start() {
@@ -96,8 +102,58 @@ public final class SwiftTickerView: GLKView {
         
         tickerDelegate?.tickerView(willStop: self)
         isRunning = false
-        displayLink?.remove(from: RunLoop.current, forMode: .commonModes)
-        displayLink = nil
+        displayLink?.isPaused = true
+    }
+    
+    public func registerView(for separator: UIView.Type) {
+        separatorView = separator
+    }
+    
+    public func registerNib(for separator: UINib) {
+        separatorNib = separator
+    }
+    
+    public func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
+        registeredNodeViews[identifier] = nodeView
+    }
+    
+    public func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
+        registeredNodeViews[identifier] = nodeView
+    }
+    
+    public func dequeueReusableSeparator() -> UIView? {
+        if let separator = separator {
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+            label.text = separator
+            label.numberOfLines = 1
+            label.sizeToFit()
+            return label
+        } else if let separatorView = separatorView {
+            return separatorView.init(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        } else if let separatorNib = separatorNib {
+            return separatorNib.instantiate(withOwner: nil, options: nil).first as? UIView
+        }
+        return nil
+    }
+    
+    public func dequeReusableNodeView(for identifier: String) -> UIView? {
+        if let index = reusableNodeViews.index(where: { $0.key == identifier }) {
+            let view = reusableNodeViews[index].view
+            reusableNodeViews.remove(at: index)
+            return view
+        }
+        
+        guard let any = registeredNodeViews[identifier] else {
+            return nil
+        }
+        
+        if let anyclass = any as? UIView.Type {
+            return anyclass.init(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        } else if let nib = any as? UINib {
+            return nib.instantiate(withOwner: nil, options: nil).first as? UIView
+        }
+        
+        return nil
     }
     
     //MARK: - Private
@@ -154,7 +210,16 @@ public final class SwiftTickerView: GLKView {
     }
     
     @objc private func button(touchedUpInside button: UIButton, with event: UIEvent) {
-        
+        guard let origin = event.allTouches?.first?.location(in: self) else {
+            return
+        }
+        let rect = CGRect(origin: origin, size: CGSize(width: 1, height: 1))
+        if let view = nodeViews.first(where: {
+            $0.key != separatorIdentifier && $0.view.frame.intersects(rect)
+        }) {
+          tickerDelegate?.tickerView(didPress: view.view, content: view.content)
+        }
+        start()
     }
     
     @objc private func button(touchedUpOutside button: UIButton) {
@@ -162,18 +227,25 @@ public final class SwiftTickerView: GLKView {
     }
     
     private func renewDisplayLink() {
-        guard displayLink == nil else { return }
+        guard displayLink == nil else {
+            displayLink?.isPaused = false
+            return
+        }
         
         displayLink = CADisplayLink(target: self,
                                     selector: #selector(render))
-        displayLink?.frameInterval = frameInterval
+        if #available(iOS 10.0, *) {
+            displayLink?.preferredFramesPerSecond = interval
+        } else {
+            displayLink?.frameInterval = interval
+        }
         displayLink?.add(to: RunLoop.current, forMode:.commonModes)
     }
     
     private func resume() {
         guard !isRunning,
-            let provider = provider,
-            provider.hasContent else { return }
+            let contentProvider = contentProvider,
+            contentProvider.hasContent else { return }
         
         tickerDelegate?.tickerView(willResume: self)
         isRunning = true
@@ -189,17 +261,17 @@ public final class SwiftTickerView: GLKView {
         display()
     }
     
-    private func update(node: UIView) {
+    private func update(node: UIView, offset: CGFloat) {
         var frame = node.frame
         switch direction {
         case .horizontalRightToLeft:
-            frame.origin.x -= 1
+            frame.origin.x -= offset
         case .horizontalLeftToRight:
-            frame.origin.x += 1
+            frame.origin.x += offset
         case .verticalBottomToTop:
-            frame.origin.y -= 1
+            frame.origin.y -= offset
         case .verticalTopToBottom:
-            frame.origin.y += 1
+            frame.origin.y += offset
         }
         node.frame = frame
     }
@@ -228,13 +300,13 @@ public final class SwiftTickerView: GLKView {
         
         switch direction {
         case .horizontalRightToLeft:
-            return frame.width - nodeView.frame.maxX > distanceBetweenNodes
+            return frame.width - nodeView.view.frame.maxX > distanceBetweenNodes
         case .horizontalLeftToRight:
-            return nodeView.frame.minX > distanceBetweenNodes
+            return nodeView.view.frame.minX > distanceBetweenNodes
         case .verticalBottomToTop:
-            return frame.height - nodeView.frame.maxY > distanceBetweenNodes
+            return frame.height - nodeView.view.frame.maxY > distanceBetweenNodes
         case .verticalTopToBottom:
-            return nodeView.frame.minY > distanceBetweenNodes
+            return nodeView.view.frame.minY > distanceBetweenNodes
         }
     }
     
@@ -242,9 +314,14 @@ public final class SwiftTickerView: GLKView {
         guard let nodeView = nodeView else { return }
         
         if viewIsOutOfBounds(nodeView),
-            let index = nodeViews.index(of: nodeView) {
+            let index = nodeViews.index(where: { $0.view === nodeView }) {
+            let nodeView = nodeViews[index]
+            if nodeView.key != separatorIdentifier,
+                nodeView.key != dontReuseIdentifier {
+                reusableNodeViews.append((nodeView.key, nodeView.view))
+            }
             nodeViews.remove(at: index)
-            nodeView.removeFromSuperview()
+            nodeView.view.removeFromSuperview()
         }
     }
     
@@ -259,56 +336,64 @@ public final class SwiftTickerView: GLKView {
             return
         }
         
-        if let separator = separator {
-            if lastNodeWasSeparator {
-                lastNodeWasSeparator = false
-            } else {
-                lastNodeWasSeparator = true
-                addNode(tickerDelegate?.tickerView(self, viewFor: separator))
+        if lastNodeWasSeparator {
+            lastNodeWasSeparator = false
+        } else {
+            lastNodeWasSeparator = true
+            let separator = dequeueReusableSeparator()
+            if let separator = separator {
+                viewProvider?.tickerView(self, prepareSeparator: separator)
+                addNode(separator,
+                        for: separatorIdentifier,
+                        content: nil)
             }
+            return
         }
         
-        if let content = provider?.next {
-            addNode(tickerDelegate?.tickerView(self, viewFor: content))
+        if let content = contentProvider?.next,
+            let nodeView = viewProvider?.tickerView(self, viewFor: content) {
+            addNode(nodeView.0,
+                    for: nodeView.reuseIdentifier ?? dontReuseIdentifier,
+                    content: content)
         }
     }
     
-    private func addNode(_ nodeView: UIView?) {
+    private func addNode(_ nodeView: UIView?, for identifier: String, content: Any?) {
         guard let nodeView = nodeView else {
             return
         }
         
         addSubview(nodeView)
         align(next: nodeView)
-        nodeViews.append(nodeView)
+        nodeViews.append((identifier, nodeView, content))
     }
     
     private func align(next nodeView: UIView) {
         var frame = nodeView.frame
         switch direction {
         case .horizontalRightToLeft:
-            if let last = nodeViews.last {
+            if let last = nodeViews.last?.view {
                 frame.origin.x = last.frame.maxX + distanceBetweenNodes
             } else {
                 frame.origin.x = self.frame.maxX
             }
             frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
         case .horizontalLeftToRight:
-            if let last = nodeViews.last {
+            if let last = nodeViews.last?.view {
                 frame.origin.x = last.frame.minX - distanceBetweenNodes - frame.width
             } else {
                 frame.origin.x = -frame.width
             }
             frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
         case .verticalBottomToTop:
-            if let last = nodeViews.last {
+            if let last = nodeViews.last?.view {
                 frame.origin.y = last.frame.maxY + distanceBetweenNodes
             } else {
                 frame.origin.y = frame.maxY
             }
             frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
         case .verticalTopToBottom:
-            if let last = nodeViews.last {
+            if let last = nodeViews.last?.view {
                 frame.origin.y = last.frame.minY - distanceBetweenNodes - frame.height
             } else {
                 frame.origin.y = -frame.height
@@ -318,12 +403,21 @@ public final class SwiftTickerView: GLKView {
         nodeView.frame = frame
     }
     
+    private var framesPerSecond: Int {
+        guard let displayLink = displayLink,
+            displayLink.duration > 0 else {
+            return 0
+        }
+        return Int(round(1000 / displayLink.duration)/1000)
+    }
+    
     fileprivate func updateTickerNodeViewPosition() {
+        let offset = pixelPerSecond / CGFloat(framesPerSecond)
         nodeViews.forEach({[weak self] in
-            self?.update(node: $0)
+            self?.update(node: $0.view, offset: offset)
         })
         
-        removeNodeIfNeeded(nodeViews.first)
+        removeNodeIfNeeded(nodeViews.first?.view)
         addNewNodeIfNeeded()
     }
 }
