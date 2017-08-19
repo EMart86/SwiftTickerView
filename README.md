@@ -50,6 +50,16 @@ This ticker view is designed to be able to support arabic and hebrew aswell as t
 tickerView.direction = .horizontalRightToLeft
 ```
 
+You can manage the velocity of the content to run across the display. You can alter this value at runtime aswell to increase or slow down the ticker view:
+```swift
+tickerView.pixelPerSecond = 60 //default is 60
+```
+
+Don't forget to start the tickerview, otherwhise it's not working:
+```swift
+tickerView.start() 
+```
+
 And last but not least, implement the contentProvider property to provide your content!
 
 Btw, in the viewProvider protocol, the view node view creation function has to return a tuple with a view parameter and an optional reuseIdentifier parameter. Use this parameter to store it and reuse it for later usage:
@@ -70,15 +80,6 @@ func tickerView(_ tickerView: SwiftTickerView, prepareSeparator separator: UIVie
         separator.textColor = .white
     }
 }
-```
-
-
-
-tickerView.contentProvider = TickerProvider()
-
-
-
-```swift
 ```
 
 
