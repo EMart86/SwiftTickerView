@@ -29,7 +29,7 @@ public protocol SwiftTickerViewProvider {
 public final class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
-    private let interval = 60
+    private let interval = 120
     public enum Direction {
         case horizontalLeftToRight
         case horizontalRightToLeft
