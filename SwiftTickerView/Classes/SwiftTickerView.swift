@@ -29,7 +29,7 @@ public protocol SwiftTickerViewProvider {
 public final class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
-    private let interval = 60
+    private let interval = 120
     public enum Direction {
         case horizontalLeftToRight
         case horizontalRightToLeft
@@ -55,6 +55,7 @@ public final class SwiftTickerView: GLKView {
     private var lastNodeWasSeparator: Bool = false
     private var displayLink: CADisplayLink?
     private var nodeViews = [(key: String, view: UIView, content: Any?)]()
+    private var reusableSeparatorViews = [(key: String, view: UIView)]()
     private var reusableNodeViews = [(key: String, view: UIView)]()
     private var registeredNodeViews = [String: Any]()
     
@@ -123,6 +124,12 @@ public final class SwiftTickerView: GLKView {
     
     public func dequeueReusableSeparator() -> UIView? {
         if let separator = separator {
+            if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
+                let view = reusableSeparatorViews[index].view
+                reusableSeparatorViews.remove(at: index)
+                return view
+            }
+            
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             label.text = separator
             label.numberOfLines = 1
@@ -316,8 +323,9 @@ public final class SwiftTickerView: GLKView {
         if viewIsOutOfBounds(nodeView),
             let index = nodeViews.index(where: { $0.view === nodeView }) {
             let nodeView = nodeViews[index]
-            if nodeView.key != separatorIdentifier,
-                nodeView.key != dontReuseIdentifier {
+            if nodeView.key == separatorIdentifier {
+                reusableSeparatorViews.append((nodeView.key, nodeView.view))
+            } else if nodeView.key != dontReuseIdentifier {
                 reusableNodeViews.append((nodeView.key, nodeView.view))
             }
             nodeViews.remove(at: index)

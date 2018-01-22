@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftTickerView'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.summary          = 'A simple news ticker view'
 
   s.description      = <<-DESC
@@ -23,6 +23,7 @@ A swift ticker, written in swift. The one, with those '+++' separators ;)
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
+  s.tvos.deployment_target = '9.0'
 
   s.source_files = 'SwiftTickerView/Classes/**/*'
 end
