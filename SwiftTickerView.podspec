@@ -10,6 +10,7 @@ Pod::Spec.new do |s|
   s.name             = 'SwiftTickerView'
   s.version          = '1.2.1'
   s.summary          = 'A simple news ticker view'
+  s.swift_version    = '4.0'
 
   s.description      = <<-DESC
 A swift ticker, written in swift. The one, with those '+++' separators ;)
