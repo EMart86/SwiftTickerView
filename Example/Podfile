@@ -9,3 +9,13 @@ target 'SwiftTickerView_Example' do
     
   end
 end
+
+target 'appletv' do
+    pod 'SwiftTickerView', :path => '../'
+    
+    target 'appletvTests' do
+        inherit! :search_paths
+        
+        
+    end
+end
