@@ -77,8 +77,7 @@ public final class SwiftTickerView: GLKView {
     }
     
     public override init(frame: CGRect) {
-        super.init(frame: frame,
-                   context: EAGLContext(api: .openGLES2))
+        super.init(frame: frame)
         
         setupUI()
     }
@@ -166,8 +165,11 @@ public final class SwiftTickerView: GLKView {
     //MARK: - Private
     
     private func setupOpenGl() {
-        
-        context = EAGLContext(api: .openGLES2)
+        guard let context = EAGLContext(api: .openGLES2) else {
+            assertionFailure("EAGL context couldn't be loaded")
+            return
+        }
+        self.context = context
         drawableColorFormat = .RGBA8888
         EAGLContext.setCurrent(self.context)
         enableSetNeedsDisplay = true
@@ -241,7 +243,7 @@ public final class SwiftTickerView: GLKView {
         
         displayLink = CADisplayLink(target: self,
                                     selector: #selector(render))
-        if #available(iOS 10.0, *) {
+        if #available(iOS 10.0, tvOS 10.0, *) {
             displayLink?.preferredFramesPerSecond = interval
         } else {
             displayLink?.frameInterval = interval

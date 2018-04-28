@@ -1,16 +1,16 @@
 PODS:
-  - SwiftTickerView (0.1.0)
+  - SwiftTickerView (1.1.0)
 
 DEPENDENCIES:
   - SwiftTickerView (from `../`)
 
 EXTERNAL SOURCES:
   SwiftTickerView:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  SwiftTickerView: 62b2d0f28951b6e5d1bfc77f05d4fd77b6d6698f
+  SwiftTickerView: 2e32af184511f794659cb4b7686b3205a3b039b7
 
-PODFILE CHECKSUM: ecd5d7c0ae5891a13221ae1ca5aaeab5e32c4a97
+PODFILE CHECKSUM: 0913893b3c3ed3f27b9a63d863d7215ddc13a471
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.5.0
