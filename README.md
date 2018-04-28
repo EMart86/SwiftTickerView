@@ -83,6 +83,10 @@ func tickerView(_ tickerView: SwiftTickerView, prepareSeparator separator: UIVie
 ```
 
 
+## tvOS
+
+The pod is also tested on the lastest Apples TV OS 11
+
 ## Author
 
 Martin Eberl, eberl_ma@gmx.at
