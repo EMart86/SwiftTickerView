@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftTickerView'
-  s.version          = '1.2.0'
+  s.version          = '1.2.1'
   s.summary          = 'A simple news ticker view'
 
   s.description      = <<-DESC
