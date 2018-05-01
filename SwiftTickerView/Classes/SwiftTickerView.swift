@@ -30,6 +30,7 @@ public protocol SwiftTickerContentRenderer {
     func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String)
     func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat)
     func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool
+    func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool
 }
 
 public final class SwiftTickerView: GLKView {
@@ -40,8 +41,9 @@ public final class SwiftTickerView: GLKView {
         typealias InitialRenderer = ((UIView, UIView?, SwiftTickerView, CGFloat) -> CGRect)
         typealias UpdateRenderer = ((UIView, CGFloat) -> CGRect)
         typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
+        typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
         
-        public static var horizontalLeftToRight = Renderer(initial: { current, last, tickerView, offset in
+        public static var horizontalRightToLeft = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.x = last.frame.maxX + offset
@@ -52,13 +54,15 @@ public final class SwiftTickerView: GLKView {
             return frame
         }, update: { current, offset in
             var frame = current.frame
-            frame.origin.x += offset
+            frame.origin.x -= offset
             return frame
         }, shouldAddNewNode: { current, tickerView, offset in
             tickerView.frame.width - current.frame.maxX > offset
+        }, shouldRemoveNode: { current, _ in
+            current.frame.maxX < 0
         })
         
-        public static var horizontalRightToLeft = Renderer(initial: { current, last, tickerView, offset in
+        public static var horizontalLeftToRight = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.x = last.frame.minX - offset - frame.width
@@ -69,30 +73,34 @@ public final class SwiftTickerView: GLKView {
             return frame
         }, update: { current, offset in
             var frame = current.frame
-            frame.origin.x -= offset
+            frame.origin.x += offset
             return frame
         }, shouldAddNewNode: { current, _, offset in
             current.frame.minX > offset
+        }, shouldRemoveNode: { current, tickerView in
+            current.frame.minX > tickerView.frame.maxX
         })
         
-        public static var verticalTopToBottom = Renderer(initial: { current, last, tickerView, offset in
+        public static var verticalBottomToTop = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.y = last.frame.maxY + offset
             } else {
-                frame.origin.y = frame.maxY
+                frame.origin.y = tickerView.frame.maxY
             }
             frame.origin.x = (tickerView.frame.width - frame.width) / 2
             return frame
         }, update: { current, offset in
             var frame = current.frame
-            frame.origin.y += offset
+            frame.origin.y -= offset
             return frame
         }, shouldAddNewNode: { current, tickerView, offset in
             tickerView.frame.height - current.frame.maxY > offset
+        }, shouldRemoveNode: { current, _ in
+            current.frame.maxY < 0
         })
         
-        public static var verticalBottomToTop = Renderer(initial: { current, last, tickerView, offset in
+        public static var verticalTopToBottom = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.y = last.frame.minY - offset - frame.height
@@ -103,24 +111,29 @@ public final class SwiftTickerView: GLKView {
             return frame
         }, update: { current, offset in
             var frame = current.frame
-            frame.origin.y -= offset
+            frame.origin.y += offset
             return frame
         }, shouldAddNewNode: { current, _, offset in
             current.frame.minY > offset
+        }, shouldRemoveNode: { current, tickerView in
+            current.frame.minY > tickerView.frame.maxY
         })
         
         private let initial: InitialRenderer
         private let update: UpdateRenderer
         private let shouldAddNewNode: ShouldAddNewNode
+        private let shouldRemoveNode: ShouldRemoveNode
         private var last: UIView?
         
         
         init(initial: @escaping InitialRenderer,
              update: @escaping UpdateRenderer,
-             shouldAddNewNode: @escaping ShouldAddNewNode) {
+             shouldAddNewNode: @escaping ShouldAddNewNode,
+             shouldRemoveNode: @escaping ShouldRemoveNode) {
             self.initial = initial
             self.update = update
             self.shouldAddNewNode = shouldAddNewNode
+            self.shouldRemoveNode = shouldRemoveNode
         }
         
         public func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat) {
@@ -129,6 +142,10 @@ public final class SwiftTickerView: GLKView {
         
         public func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool {
             return shouldAddNewNode(nodeView, tickerView, tickerView.distanceBetweenNodes)
+        }
+        
+        public func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool {
+            return shouldRemoveNode(nodeView, tickerView)
         }
         
         public func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
@@ -140,7 +157,7 @@ public final class SwiftTickerView: GLKView {
     @available(*, unavailable, renamed: "render", message: "Use 'SwiftTickerView.Renderer' and any available instances for letting your content render in a given way or implement your own rendering option.")
     public typealias direction = Renderer
     
-    public var render: SwiftTickerContentRenderer = Renderer.horizontalLeftToRight {
+    public var render: SwiftTickerContentRenderer = Renderer.horizontalRightToLeft {
         didSet {
             stop()
             resume()
@@ -395,7 +412,7 @@ public final class SwiftTickerView: GLKView {
             return false
         }
         
-        return !frame.contains(nodeView.frame)
+        return render.tickerViewShouldRemove(self, nodeView: nodeView)
     }
     
     private var shouldAddView: Bool {
