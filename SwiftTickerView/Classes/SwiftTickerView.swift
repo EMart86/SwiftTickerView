@@ -43,7 +43,7 @@ public final class SwiftTickerView: GLKView {
         typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
         typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
         
-        public static var horizontalRightToLeft = Renderer(initial: { current, last, tickerView, offset in
+        public static var rightToLeft = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.x = last.frame.maxX + offset
@@ -62,7 +62,7 @@ public final class SwiftTickerView: GLKView {
             current.frame.maxX < 0
         })
         
-        public static var horizontalLeftToRight = Renderer(initial: { current, last, tickerView, offset in
+        public static var leftToRight = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.x = last.frame.minX - offset - frame.width
@@ -81,7 +81,7 @@ public final class SwiftTickerView: GLKView {
             current.frame.minX > tickerView.frame.maxX
         })
         
-        public static var verticalBottomToTop = Renderer(initial: { current, last, tickerView, offset in
+        public static var bottomToTop = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.y = last.frame.maxY + offset
@@ -100,7 +100,7 @@ public final class SwiftTickerView: GLKView {
             current.frame.maxY < 0
         })
         
-        public static var verticalTopToBottom = Renderer(initial: { current, last, tickerView, offset in
+        public static var topToBottom = Renderer(initial: { current, last, tickerView, offset in
             var frame = current.frame
             if let last = last {
                 frame.origin.y = last.frame.minY - offset - frame.height
@@ -154,10 +154,22 @@ public final class SwiftTickerView: GLKView {
         }
     }
     
-    @available(*, unavailable, renamed: "render", message: "Use 'SwiftTickerView.Renderer' and any available instances for letting your content render in a given way or implement your own rendering option.")
-    public typealias direction = Renderer
+    @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
+    public enum Direction {
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.rightToLeft")
+        case horizontalRightToLeft
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.leftToRight")
+        case horizontalLeftToRight
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.topToBottom")
+        case verticalTopToBottom
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.bottomToTop")
+        case verticalBottomToTop
+    }
     
-    public var render: SwiftTickerContentRenderer = Renderer.horizontalRightToLeft {
+    @available(*, unavailable, renamed: "render")
+    public var direction: Direction?
+    
+    public var render: SwiftTickerContentRenderer = Renderer.rightToLeft {
         didSet {
             stop()
             resume()
