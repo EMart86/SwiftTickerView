@@ -7,6 +7,22 @@
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
 
+## 1.3.0
+
+* You can now implement your own renderer
+
+### Renamings
+* renamed ```direction``` to ```renderer```
+* ```Direction.horizontalRightToLeft``` renamed to ```SwiftTickerView.Renderer.rightToLeft```
+* ```Direction.horizontalLeftToRight``` renamed to ```SwiftTickerView.Renderer.leftToRight```
+* ```Direction.verticalTopToBottom``` renamed to ```SwiftTickerView.Renderer.topToBottom```
+* ```Direction.verticalBottomToTop``` renamed to ```SwiftTickerView.Renderer.bottomToTop```
+
+## 1.2.2
+
+* Now supports TV OS
+* Performance improvements
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -81,11 +97,6 @@ func tickerView(_ tickerView: SwiftTickerView, prepareSeparator separator: UIVie
     }
 }
 ```
-
-
-## tvOS
-
-The pod is also tested on the lastest Apples TV OS 11
 
 ## Author
 
