@@ -26,25 +26,161 @@ public protocol SwiftTickerViewProvider {
     func tickerView(_ tickerView: SwiftTickerView, viewFor: Any) -> (UIView, reuseIdentifier: String?)
 }
 
+public protocol SwiftTickerContentRenderer {
+    func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String)
+    func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat)
+    func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool
+    func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool
+}
+
 public final class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
-    private let interval = 120
+    
+    open class Renderer: SwiftTickerContentRenderer {
+        typealias InitialRenderer = ((UIView, UIView?, SwiftTickerView, CGFloat) -> CGRect)
+        typealias UpdateRenderer = ((UIView, CGFloat) -> CGRect)
+        typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
+        typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
+        
+        public static var rightToLeft = Renderer(initial: { current, last, tickerView, offset in
+            var frame = current.frame
+            if let last = last {
+                frame.origin.x = last.frame.maxX + offset
+            } else {
+                frame.origin.x = tickerView.frame.maxX
+            }
+            frame.origin.y = (tickerView.frame.height - frame.height) / 2
+            return frame
+        }, update: { current, offset in
+            var frame = current.frame
+            frame.origin.x -= offset
+            return frame
+        }, shouldAddNewNode: { current, tickerView, offset in
+            tickerView.frame.width - current.frame.maxX > offset
+        }, shouldRemoveNode: { current, _ in
+            current.frame.maxX < 0
+        })
+        
+        public static var leftToRight = Renderer(initial: { current, last, tickerView, offset in
+            var frame = current.frame
+            if let last = last {
+                frame.origin.x = last.frame.minX - offset - frame.width
+            } else {
+                frame.origin.x = -frame.width
+            }
+            frame.origin.y = (tickerView.frame.height - frame.height) / 2
+            return frame
+        }, update: { current, offset in
+            var frame = current.frame
+            frame.origin.x += offset
+            return frame
+        }, shouldAddNewNode: { current, _, offset in
+            current.frame.minX > offset
+        }, shouldRemoveNode: { current, tickerView in
+            current.frame.minX > tickerView.frame.maxX
+        })
+        
+        public static var bottomToTop = Renderer(initial: { current, last, tickerView, offset in
+            var frame = current.frame
+            if let last = last {
+                frame.origin.y = last.frame.maxY + offset
+            } else {
+                frame.origin.y = tickerView.frame.maxY
+            }
+            frame.origin.x = (tickerView.frame.width - frame.width) / 2
+            return frame
+        }, update: { current, offset in
+            var frame = current.frame
+            frame.origin.y -= offset
+            return frame
+        }, shouldAddNewNode: { current, tickerView, offset in
+            tickerView.frame.height - current.frame.maxY > offset
+        }, shouldRemoveNode: { current, _ in
+            current.frame.maxY < 0
+        })
+        
+        public static var topToBottom = Renderer(initial: { current, last, tickerView, offset in
+            var frame = current.frame
+            if let last = last {
+                frame.origin.y = last.frame.minY - offset - frame.height
+            } else {
+                frame.origin.y = -frame.height
+            }
+            frame.origin.x = (tickerView.frame.width - frame.width) / 2
+            return frame
+        }, update: { current, offset in
+            var frame = current.frame
+            frame.origin.y += offset
+            return frame
+        }, shouldAddNewNode: { current, _, offset in
+            current.frame.minY > offset
+        }, shouldRemoveNode: { current, tickerView in
+            current.frame.minY > tickerView.frame.maxY
+        })
+        
+        private let initial: InitialRenderer
+        private let update: UpdateRenderer
+        private let shouldAddNewNode: ShouldAddNewNode
+        private let shouldRemoveNode: ShouldRemoveNode
+        private var last: UIView?
+        
+        
+        init(initial: @escaping InitialRenderer,
+             update: @escaping UpdateRenderer,
+             shouldAddNewNode: @escaping ShouldAddNewNode,
+             shouldRemoveNode: @escaping ShouldRemoveNode) {
+            self.initial = initial
+            self.update = update
+            self.shouldAddNewNode = shouldAddNewNode
+            self.shouldRemoveNode = shouldRemoveNode
+        }
+        
+        public func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat) {
+            nodeView.frame = update(nodeView, offset)
+        }
+        
+        public func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool {
+            return shouldAddNewNode(nodeView, tickerView, tickerView.distanceBetweenNodes)
+        }
+        
+        public func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool {
+            return shouldRemoveNode(nodeView, tickerView)
+        }
+        
+        public func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
+            nodeView.frame = initial(nodeView, last, tickerView, tickerView.distanceBetweenNodes)
+            last = nodeView
+        }
+    }
+    
+    @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
     public enum Direction {
-        case horizontalLeftToRight
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.rightToLeft")
         case horizontalRightToLeft
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.leftToRight")
+        case horizontalLeftToRight
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.topToBottom")
         case verticalTopToBottom
+        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.bottomToTop")
         case verticalBottomToTop
     }
     
-    public var direction: Direction = .horizontalLeftToRight {
+    @available(*, unavailable, renamed: "render")
+    public var direction: Direction?
+    
+    public var render: SwiftTickerContentRenderer = Renderer.rightToLeft {
         didSet {
             stop()
             resume()
         }
     }
     
-    public var pixelPerSecond: CGFloat = 60
+    public var pixelPerSecond: CGFloat = 60 {
+        didSet {
+            renewDisplayLink()
+        }
+    }
     public var separator: String?
     private var separatorView: UIView.Type?
     private var separatorNib: UINib?
@@ -165,7 +301,7 @@ public final class SwiftTickerView: GLKView {
     //MARK: - Private
     
     private func setupOpenGl() {
-        guard let context = EAGLContext(api: .openGLES2) else {
+        guard let context = loadEaglContext() else {
             assertionFailure("EAGL context couldn't be loaded")
             return
         }
@@ -174,6 +310,10 @@ public final class SwiftTickerView: GLKView {
         EAGLContext.setCurrent(self.context)
         enableSetNeedsDisplay = true
         setNeedsDisplay()
+    }
+    
+    private func loadEaglContext() -> EAGLContext? {
+        return EAGLContext(api: .openGLES3) ?? EAGLContext(api: .openGLES2) ?? EAGLContext(api: .openGLES1)
     }
     
     private func setupUI() {
@@ -238,17 +378,22 @@ public final class SwiftTickerView: GLKView {
     private func renewDisplayLink() {
         guard displayLink == nil else {
             displayLink?.isPaused = false
+            if #available(iOS 10.0, tvOS 10.0, *) {
+                displayLink?.preferredFramesPerSecond = Int(pixelPerSecond)
+            } else {
+                displayLink?.frameInterval = Int(pixelPerSecond)
+            }
             return
         }
         
         displayLink = CADisplayLink(target: self,
-                                    selector: #selector(render))
+                                    selector: #selector(rendering))
         if #available(iOS 10.0, tvOS 10.0, *) {
-            displayLink?.preferredFramesPerSecond = interval
+            displayLink?.preferredFramesPerSecond = Int(pixelPerSecond)
         } else {
-            displayLink?.frameInterval = interval
+            displayLink?.frameInterval = Int(pixelPerSecond)
         }
-        displayLink?.add(to: RunLoop.current, forMode:.commonModes)
+        displayLink?.add(to: .main, forMode:.commonModes)
     }
     
     private func resume() {
@@ -262,7 +407,7 @@ public final class SwiftTickerView: GLKView {
         renewDisplayLink()
     }
     
-    @objc private func render() {
+    @objc private func rendering() {
         guard isRunning else {
             return
         }
@@ -271,18 +416,7 @@ public final class SwiftTickerView: GLKView {
     }
     
     private func update(node: UIView, offset: CGFloat) {
-        var frame = node.frame
-        switch direction {
-        case .horizontalRightToLeft:
-            frame.origin.x -= offset
-        case .horizontalLeftToRight:
-            frame.origin.x += offset
-        case .verticalBottomToTop:
-            frame.origin.y -= offset
-        case .verticalTopToBottom:
-            frame.origin.y += offset
-        }
-        node.frame = frame
+        render.tickerViewUpdate(self, render: node, offset: offset)
     }
     
     private func viewIsOutOfBounds(_ nodeView: UIView?) -> Bool {
@@ -290,16 +424,7 @@ public final class SwiftTickerView: GLKView {
             return false
         }
         
-        switch direction {
-        case .horizontalRightToLeft:
-            return nodeView.frame.maxX < 0
-        case .horizontalLeftToRight:
-            return nodeView.frame.minX > frame.maxX
-        case .verticalBottomToTop:
-            return nodeView.frame.maxY < 0
-        case .verticalTopToBottom:
-            return nodeView.frame.minY > frame.maxY
-        }
+        return render.tickerViewShouldRemove(self, nodeView: nodeView)
     }
     
     private var shouldAddView: Bool {
@@ -307,16 +432,7 @@ public final class SwiftTickerView: GLKView {
             return true
         }
         
-        switch direction {
-        case .horizontalRightToLeft:
-            return frame.width - nodeView.view.frame.maxX > distanceBetweenNodes
-        case .horizontalLeftToRight:
-            return nodeView.view.frame.minX > distanceBetweenNodes
-        case .verticalBottomToTop:
-            return frame.height - nodeView.view.frame.maxY > distanceBetweenNodes
-        case .verticalTopToBottom:
-            return nodeView.view.frame.minY > distanceBetweenNodes
-        }
+        return render.tickerViewShouldAddNext(self, current: nodeView.view)
     }
     
     private func removeNodeIfNeeded(_ nodeView: UIView?) {
@@ -374,43 +490,8 @@ public final class SwiftTickerView: GLKView {
         }
         
         addSubview(nodeView)
-        align(next: nodeView)
+        render.tickerView(self, render: nodeView, with: identifier)
         nodeViews.append((identifier, nodeView, content))
-    }
-    
-    private func align(next nodeView: UIView) {
-        var frame = nodeView.frame
-        switch direction {
-        case .horizontalRightToLeft:
-            if let last = nodeViews.last?.view {
-                frame.origin.x = last.frame.maxX + distanceBetweenNodes
-            } else {
-                frame.origin.x = self.frame.maxX
-            }
-            frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
-        case .horizontalLeftToRight:
-            if let last = nodeViews.last?.view {
-                frame.origin.x = last.frame.minX - distanceBetweenNodes - frame.width
-            } else {
-                frame.origin.x = -frame.width
-            }
-            frame.origin.y = (self.frame.height - nodeView.frame.height) / 2
-        case .verticalBottomToTop:
-            if let last = nodeViews.last?.view {
-                frame.origin.y = last.frame.maxY + distanceBetweenNodes
-            } else {
-                frame.origin.y = frame.maxY
-            }
-            frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
-        case .verticalTopToBottom:
-            if let last = nodeViews.last?.view {
-                frame.origin.y = last.frame.minY - distanceBetweenNodes - frame.height
-            } else {
-                frame.origin.y = -frame.height
-            }
-            frame.origin.x = (self.frame.width - nodeView.frame.width) / 2
-        }
-        nodeView.frame = frame
     }
     
     private var framesPerSecond: Int {
