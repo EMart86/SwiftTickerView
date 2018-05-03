@@ -63,7 +63,7 @@ tickerView.tickerDelegate = self
 
 This ticker view is designed to be able to support arabic and hebrew aswell as the other languages. Simply use the direction property, to determine if you want the content to run from left to right, from right to left, from top to bottom or from bottom to top:
 ```swift
-tickerView.direction = .horizontalRightToLeft
+tickerView.renderer = SwiftTickerView.Renderer.rightToLeft
 ```
 
 You can manage the velocity of the content to run across the display. You can alter this value at runtime aswell to increase or slow down the ticker view:
