@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         tickerView.contentProvider = TickerProvider()
         tickerView.viewProvider = self
         tickerView.separator = "+++"
-        tickerView.render = SwiftTickerView.Renderer.topToBottom
+        tickerView.render = SwiftTickerView.Renderer.topToBottom.customize(with: SwiftTickerItemDecorators.prepareAtBottomInnerBorder(with: 8))
         tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
         tickerView.tickerDelegate = self
     }

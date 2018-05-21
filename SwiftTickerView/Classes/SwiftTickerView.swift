@@ -33,111 +33,90 @@ public protocol SwiftTickerContentRenderer {
     func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool
 }
 
-public final class SwiftTickerView: GLKView {
+public protocol InitialRenderer {
+    func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat)
+}
+
+public protocol UpdateRenderer {
+    func updateWith(current: UIView, offset: CGFloat)
+}
+
+open class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
     
     open class Renderer: SwiftTickerContentRenderer {
-        typealias InitialRenderer = ((UIView, UIView?, SwiftTickerView, CGFloat) -> CGRect)
-        typealias UpdateRenderer = ((UIView, CGFloat) -> CGRect)
         typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
         typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
         
-        public static var rightToLeft = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.x = last.frame.maxX + offset
-            } else {
-                frame.origin.x = tickerView.frame.maxX
-            }
-            frame.origin.y = (tickerView.frame.height - frame.height) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.x -= offset
-            return frame
-        }, shouldAddNewNode: { current, tickerView, offset in
+        public func customize(with initial: SwiftTickerItemDecorator & InitialRenderer) -> Renderer {
+            initials.append(initial)
+            return self
+        }
+        
+        public func customize(with update: SwiftTickerItemDecorator & UpdateRenderer) -> Renderer {
+            updates.append(update)
+            return self
+        }
+        
+        public static var rightToLeft = Renderer(initials: [SwiftTickerItemDecorators.alignItemsLeftToEachOther(),
+                                                            SwiftTickerItemDecorators.prepareAtRightOuterBorder(),
+                                                            SwiftTickerItemDecorators.centerVertical()],
+                                                 updates: [SwiftTickerItemDecorators.updateX(-)],
+                                                 shouldAddNewNode: { current, tickerView, offset in
             tickerView.frame.width - current.frame.maxX > offset
         }, shouldRemoveNode: { current, _ in
             current.frame.maxX < 0
         })
         
-        public static var leftToRight = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.x = last.frame.minX - offset - frame.width
-            } else {
-                frame.origin.x = -frame.width
-            }
-            frame.origin.y = (tickerView.frame.height - frame.height) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.x += offset
-            return frame
-        }, shouldAddNewNode: { current, _, offset in
+        public static var leftToRight = Renderer(initials: [SwiftTickerItemDecorators.alignItemsRightToEachOther(),
+                                                            SwiftTickerItemDecorators.prepareAtLeftOuterBorder(),
+                                                            SwiftTickerItemDecorators.centerVertical()],
+                                                 updates: [SwiftTickerItemDecorators.updateX(+)],
+                                                 shouldAddNewNode: { current, _, offset in
             current.frame.minX > offset
         }, shouldRemoveNode: { current, tickerView in
             current.frame.minX > tickerView.frame.maxX
         })
         
-        public static var bottomToTop = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.y = last.frame.maxY + offset
-            } else {
-                frame.origin.y = tickerView.frame.maxY
-            }
-            frame.origin.x = (tickerView.frame.width - frame.width) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.y -= offset
-            return frame
-        }, shouldAddNewNode: { current, tickerView, offset in
+        public static var bottomToTop = Renderer(initials: [SwiftTickerItemDecorators.alignItemsBelowEachOther(),
+                                                            SwiftTickerItemDecorators.prepareAtBottomOuterBorder(),
+                                                            SwiftTickerItemDecorators.centerHorizontal()],
+                                                 updates: [SwiftTickerItemDecorators.updateY(-)],
+                                                 shouldAddNewNode: { current, tickerView, offset in
             tickerView.frame.height - current.frame.maxY > offset
         }, shouldRemoveNode: { current, _ in
             current.frame.maxY < 0
         })
         
-        public static var topToBottom = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.y = last.frame.minY - offset - frame.height
-            } else {
-                frame.origin.y = -frame.height
-            }
-            frame.origin.x = (tickerView.frame.width - frame.width) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.y += offset
-            return frame
-        }, shouldAddNewNode: { current, _, offset in
+        public static var topToBottom = Renderer(initials: [SwiftTickerItemDecorators.centerHorizontal(),
+                                                            SwiftTickerItemDecorators.alignItemsAboveEachOther(),
+                                                            SwiftTickerItemDecorators.prepareAtTopOuterBorder()],
+                                                 updates: [SwiftTickerItemDecorators.updateY(+)],
+                                                 shouldAddNewNode: { current, _, offset in
             current.frame.minY > offset
         }, shouldRemoveNode: { current, tickerView in
             current.frame.minY > tickerView.frame.maxY
         })
         
-        private let initial: InitialRenderer
-        private let update: UpdateRenderer
+        private var initials: [InitialRenderer & SwiftTickerItemDecorator]
+        private var updates: [UpdateRenderer & SwiftTickerItemDecorator]
         private let shouldAddNewNode: ShouldAddNewNode
         private let shouldRemoveNode: ShouldRemoveNode
         private var last: UIView?
         
-        
-        init(initial: @escaping InitialRenderer,
-             update: @escaping UpdateRenderer,
+        init(initials: [InitialRenderer & SwiftTickerItemDecorator],
+             updates: [UpdateRenderer & SwiftTickerItemDecorator],
              shouldAddNewNode: @escaping ShouldAddNewNode,
              shouldRemoveNode: @escaping ShouldRemoveNode) {
-            self.initial = initial
-            self.update = update
+            self.initials = initials
+            self.updates = updates
             self.shouldAddNewNode = shouldAddNewNode
             self.shouldRemoveNode = shouldRemoveNode
         }
         
         public func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat) {
-            nodeView.frame = update(nodeView, offset)
+            updates.forEach { $0.updateWith(current: nodeView, offset: offset) }
         }
         
         public func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool {
@@ -149,7 +128,11 @@ public final class SwiftTickerView: GLKView {
         }
         
         public func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
-            nodeView.frame = initial(nodeView, last, tickerView, tickerView.distanceBetweenNodes)
+            initials.forEach {
+                $0.updateWith(current: nodeView,
+                              last: last,
+                              tickerView: tickerView,
+                              offset: tickerView.distanceBetweenNodes) }
             last = nodeView
         }
     }
@@ -201,7 +184,7 @@ public final class SwiftTickerView: GLKView {
     
     @IBOutlet public weak var button: UIButton!
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         
         setupOpenGl()
@@ -497,16 +480,16 @@ public final class SwiftTickerView: GLKView {
     private var framesPerSecond: Int {
         guard let displayLink = displayLink,
             displayLink.duration > 0 else {
-            return 0
+                return 0
         }
         return Int(round(1000 / displayLink.duration)/1000)
     }
     
     fileprivate func updateTickerNodeViewPosition() {
         let offset = pixelPerSecond / CGFloat(framesPerSecond)
-        nodeViews.forEach({[weak self] in
+        nodeViews.forEach { [weak self] in
             self?.update(node: $0.view, offset: offset)
-        })
+        }
         
         removeNodeIfNeeded(nodeViews.first?.view)
         addNewNodeIfNeeded()
