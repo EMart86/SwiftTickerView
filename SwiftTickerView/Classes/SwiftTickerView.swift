@@ -45,6 +45,11 @@ open class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
     
+    public enum Decorator: SwiftTickerItemDecorator {
+        case ignoreFirstSeparator
+        case ignoreAllSeparators
+    }
+    
     open class Renderer: SwiftTickerContentRenderer {
         typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
         typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
@@ -154,6 +159,9 @@ open class SwiftTickerView: GLKView {
     
     public var render: SwiftTickerContentRenderer = Renderer.rightToLeft {
         didSet {
+            guard isRunning else {
+                return
+            }
             stop()
             resume()
         }
@@ -171,7 +179,8 @@ open class SwiftTickerView: GLKView {
     public var distanceBetweenNodes: CGFloat = 8
     public private(set) var isRunning = false
     
-    private var lastNodeWasSeparator: Bool = false
+    private var lastNodeWasSeparator = false
+    private var hideSeparators = false
     private var displayLink: CADisplayLink?
     private var nodeViews = [(key: String, view: UIView, content: Any?)]()
     private var reusableSeparatorViews = [(key: String, view: UIView)]()
@@ -203,6 +212,17 @@ open class SwiftTickerView: GLKView {
     
     deinit {
         displayLink?.invalidate()
+    }
+    
+    public func add(decorator: Decorator) {
+        switch decorator {
+        case .ignoreFirstSeparator:
+            if !isRunning {
+                lastNodeWasSeparator = true
+            }
+        case .ignoreAllSeparators:
+            hideSeparators = true
+        }
     }
     
     public func start() {
@@ -445,7 +465,7 @@ open class SwiftTickerView: GLKView {
             return
         }
         
-        if lastNodeWasSeparator {
+        if !hideSeparators && lastNodeWasSeparator {
             lastNodeWasSeparator = false
         } else {
             lastNodeWasSeparator = true
