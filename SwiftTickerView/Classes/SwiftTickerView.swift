@@ -46,9 +46,7 @@ open class SwiftTickerView: GLKView {
     
     public enum Decorator: SwiftTickerItemDecorator {
         case ignoreFirstSeparator
-        case ignoreAllSeparators
     }
-    
     
     @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
     public enum Direction {
@@ -109,7 +107,6 @@ open class SwiftTickerView: GLKView {
     public private(set) var isRunning = false
     
     private var lastNodeWasSeparator = false
-    private var hideSeparators = false
     private var displayLink: CADisplayLink?
     private var nodeViews = [(key: String, view: UIView, content: Any?)]()
     private var reusableSeparatorViews = [(key: String, view: UIView)]()
@@ -163,8 +160,6 @@ open class SwiftTickerView: GLKView {
             if !isRunning {
                 lastNodeWasSeparator = true
             }
-        case .ignoreAllSeparators:
-            hideSeparators = true
         }
     }
     
@@ -361,7 +356,7 @@ open class SwiftTickerView: GLKView {
         if let view = nodeViews.first(where: {
             $0.key != separatorIdentifier && $0.view.frame.intersects(rect)
         }) {
-          tickerDelegate?.tickerView(didPress: view.view, content: view.content)
+            tickerDelegate?.tickerView(didPress: view.view, content: view.content)
         }
         start()
     }
@@ -462,7 +457,7 @@ open class SwiftTickerView: GLKView {
             return
         }
         
-        if !hideSeparators && lastNodeWasSeparator {
+        if lastNodeWasSeparator {
             lastNodeWasSeparator = false
         } else {
             lastNodeWasSeparator = true

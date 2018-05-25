@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         
         tickerView.contentProvider = tickerContentProvider
         tickerView.viewProvider = self
-        tickerView.separator = "+++"
+//        tickerView.separator = "+++"
 //        tickerView.render = Renderer(initials: [SwiftTickerItemDecorators.centerHorizontal(),
 //                                                SwiftTickerItemDecorators.alignItemsAboveEachOther(),
 //                                                SwiftTickerItemDecorators.prepareAtTopOuterBorder()],
