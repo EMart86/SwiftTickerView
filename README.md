@@ -7,6 +7,33 @@
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
 
+## 1.4.0
+
+###  Customize the Renderer easily by adding a new decorators:
+    ```Renderer.topToBottom.customize(with: SwiftTickerItemDecorators.prepareAtBottomInnerBorder(with: 8))```
+    
+### Following new Render decorators are vailable:
+    *  ```prepareAtTopInnerBorder()```
+    *  ```prepareAtTopOuterBorder()```
+    *  ```prepareAtBottomInnerBorder()```
+    *  ```prepareAtBottomOuterBorder()```
+    *  ```prepareAtLeftInnerBorder()```
+    *  ```prepareAtLeftOuterBorder()```
+    *  ```prepareAtRightInnerBorder()```
+    *  ```prepareAtRightOuterBorder()```
+    
+### Implement your own inital or update Render decorator by implementing the ```InitialRenderer & SwiftTickerItemDecorator``` or ```UpdateRenderer & SwiftTickerItemDecorator```
+
+### Following new Ticker decorator is available:
+*  ```ignoreFirstSeparator```
+Add a decorator to the TickerView by calling  ```tickerView.add(.ignoreFirstSeparator)```
+
+### Renamings
+* ```SwiftTickerView.Renderer.rightToLeft``` renamed to ```Renderer.rightToLeft```
+* ```SwiftTickerView.Renderer.leftToRight``` renamed to ```Renderer.leftToRight```
+* ```SwiftTickerView.Renderer.topToBottom``` renamed to ```Renderer.topToBottom```
+* ```SwiftTickerView.Renderer.bottomToTop``` renamed to ```Renderer.bottomToTop```
+
 ## 1.3.0
 
 * You can now implement your own renderer

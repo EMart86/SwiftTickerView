@@ -11,6 +11,7 @@ import SwiftTickerView
 
 class ViewController: UIViewController {
     fileprivate let labelIdentifier = "TextMessage"
+    private let tickerContentProvider = TickerProvider()
     @IBOutlet weak var tickerView: SwiftTickerView!
 
     @IBOutlet weak var slider: UISlider!
@@ -19,12 +20,23 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tickerView.contentProvider = TickerProvider()
+        tickerView.contentProvider = tickerContentProvider
         tickerView.viewProvider = self
-        tickerView.separator = "+++"
-        tickerView.render = SwiftTickerView.Renderer.topToBottom
+//        tickerView.separator = "+++"
+//        tickerView.render = Renderer(initials: [SwiftTickerItemDecorators.centerHorizontal(),
+//                                                SwiftTickerItemDecorators.alignItemsAboveEachOther(),
+//                                                SwiftTickerItemDecorators.prepareAtTopOuterBorder()],
+//                                     updates: [SwiftTickerItemDecorators.updateY(+)],
+//                                     shouldAddNewNode: { current, _, offset in
+//                                        current.frame.minY > offset
+//        }, shouldRemoveNode: { current, tickerView in
+//            current.frame.minY > tickerView.frame.maxY
+//        })
+        tickerView.render = Renderer.topToBottom.customize(with: SwiftTickerItemDecorators.prepareAtBottomInnerBorder(with: 8))
+        tickerView.add(decorator: .ignoreFirstSeparator)
         tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
         tickerView.tickerDelegate = self
+        tickerView.reloadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +51,15 @@ class ViewController: UIViewController {
 
     @IBAction func onValueChange(_ sender: Any) {
         tickerView.pixelPerSecond = CGFloat(slider.value)
+    }
+    
+    @IBAction func onButtonClicked() {
+        tickerContentProvider.updateContent()
+    }
+    
+    @IBAction func updateContentAndReload(_ sender: Any) {
+        tickerContentProvider.updateContent()
+        tickerView.reloadData()
     }
 }
 

@@ -8,7 +8,6 @@
 
 import GLKit
 
-
 public protocol SwiftTickerProviderProtocol {
     var hasContent: Bool { get }
     var next: Any { get }
@@ -33,125 +32,20 @@ public protocol SwiftTickerContentRenderer {
     func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool
 }
 
-public final class SwiftTickerView: GLKView {
+public protocol InitialRenderer {
+    func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat)
+}
+
+public protocol UpdateRenderer {
+    func updateWith(current: UIView, offset: CGFloat)
+}
+
+open class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
     
-    open class Renderer: SwiftTickerContentRenderer {
-        typealias InitialRenderer = ((UIView, UIView?, SwiftTickerView, CGFloat) -> CGRect)
-        typealias UpdateRenderer = ((UIView, CGFloat) -> CGRect)
-        typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
-        typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
-        
-        public static var rightToLeft = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.x = last.frame.maxX + offset
-            } else {
-                frame.origin.x = tickerView.frame.maxX
-            }
-            frame.origin.y = (tickerView.frame.height - frame.height) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.x -= offset
-            return frame
-        }, shouldAddNewNode: { current, tickerView, offset in
-            tickerView.frame.width - current.frame.maxX > offset
-        }, shouldRemoveNode: { current, _ in
-            current.frame.maxX < 0
-        })
-        
-        public static var leftToRight = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.x = last.frame.minX - offset - frame.width
-            } else {
-                frame.origin.x = -frame.width
-            }
-            frame.origin.y = (tickerView.frame.height - frame.height) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.x += offset
-            return frame
-        }, shouldAddNewNode: { current, _, offset in
-            current.frame.minX > offset
-        }, shouldRemoveNode: { current, tickerView in
-            current.frame.minX > tickerView.frame.maxX
-        })
-        
-        public static var bottomToTop = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.y = last.frame.maxY + offset
-            } else {
-                frame.origin.y = tickerView.frame.maxY
-            }
-            frame.origin.x = (tickerView.frame.width - frame.width) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.y -= offset
-            return frame
-        }, shouldAddNewNode: { current, tickerView, offset in
-            tickerView.frame.height - current.frame.maxY > offset
-        }, shouldRemoveNode: { current, _ in
-            current.frame.maxY < 0
-        })
-        
-        public static var topToBottom = Renderer(initial: { current, last, tickerView, offset in
-            var frame = current.frame
-            if let last = last {
-                frame.origin.y = last.frame.minY - offset - frame.height
-            } else {
-                frame.origin.y = -frame.height
-            }
-            frame.origin.x = (tickerView.frame.width - frame.width) / 2
-            return frame
-        }, update: { current, offset in
-            var frame = current.frame
-            frame.origin.y += offset
-            return frame
-        }, shouldAddNewNode: { current, _, offset in
-            current.frame.minY > offset
-        }, shouldRemoveNode: { current, tickerView in
-            current.frame.minY > tickerView.frame.maxY
-        })
-        
-        private let initial: InitialRenderer
-        private let update: UpdateRenderer
-        private let shouldAddNewNode: ShouldAddNewNode
-        private let shouldRemoveNode: ShouldRemoveNode
-        private var last: UIView?
-        
-        
-        init(initial: @escaping InitialRenderer,
-             update: @escaping UpdateRenderer,
-             shouldAddNewNode: @escaping ShouldAddNewNode,
-             shouldRemoveNode: @escaping ShouldRemoveNode) {
-            self.initial = initial
-            self.update = update
-            self.shouldAddNewNode = shouldAddNewNode
-            self.shouldRemoveNode = shouldRemoveNode
-        }
-        
-        public func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat) {
-            nodeView.frame = update(nodeView, offset)
-        }
-        
-        public func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool {
-            return shouldAddNewNode(nodeView, tickerView, tickerView.distanceBetweenNodes)
-        }
-        
-        public func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool {
-            return shouldRemoveNode(nodeView, tickerView)
-        }
-        
-        public func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
-            nodeView.frame = initial(nodeView, last, tickerView, tickerView.distanceBetweenNodes)
-            last = nodeView
-        }
+    public enum Decorator: SwiftTickerItemDecorator {
+        case ignoreFirstSeparator
     }
     
     @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
@@ -169,39 +63,72 @@ public final class SwiftTickerView: GLKView {
     @available(*, unavailable, renamed: "render")
     public var direction: Direction?
     
+    /**
+     Assign a custom renderer to allow the content to be rendered on the ticker view.
+     Default is rightToLeft
+     */
     public var render: SwiftTickerContentRenderer = Renderer.rightToLeft {
         didSet {
+            guard isRunning else {
+                return
+            }
             stop()
             resume()
         }
     }
     
+    /**
+     Set a custom pixelPerSeconds to increase or decrease the update interval of the content.
+     Default is 60
+     WARNING: The more you increase this value, the more it looks stuttering
+     */
     public var pixelPerSecond: CGFloat = 60 {
         didSet {
             renewDisplayLink()
         }
     }
+    
+    /**
+     Asign a custom separator
+     */
     public var separator: String?
     private var separatorView: UIView.Type?
     private var separatorNib: UINib?
     
+    /**
+     Use this as offset between the items rendered on the ticker view
+     Default is 8 pixel
+     */
     public var distanceBetweenNodes: CGFloat = 8
+    
+    /**
+     Determine if the tickerview is rendering the content or has been stopped
+     */
     public private(set) var isRunning = false
     
-    private var lastNodeWasSeparator: Bool = false
+    private var lastNodeWasSeparator = false
     private var displayLink: CADisplayLink?
     private var nodeViews = [(key: String, view: UIView, content: Any?)]()
     private var reusableSeparatorViews = [(key: String, view: UIView)]()
     private var reusableNodeViews = [(key: String, view: UIView)]()
     private var registeredNodeViews = [String: Any]()
     
+    /**
+     Asign a custom content provider.
+     */
     public var contentProvider: SwiftTickerProviderProtocol?
+    /**
+     Asign a custom view provider
+     */
     public var viewProvider: SwiftTickerViewProvider?
+    /**
+     Asign a custom delegate
+     */
     public weak var tickerDelegate: SwiftTickerDelegate?
     
     @IBOutlet public weak var button: UIButton!
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         
         setupOpenGl()
@@ -222,7 +149,24 @@ public final class SwiftTickerView: GLKView {
         displayLink?.invalidate()
     }
     
-    public func start() {
+    /**
+     Adds a decorator to the tickerview
+     
+     - Parameter decorator: a protocol to customize the view behavior
+     */
+    open func add(decorator: Decorator) {
+        switch decorator {
+        case .ignoreFirstSeparator:
+            if !isRunning {
+                lastNodeWasSeparator = true
+            }
+        }
+    }
+    
+    /**
+     Starts the ticker view rendering
+     */
+    open func start() {
         tickerDelegate?.tickerView(willStart: self)
         if isRunning {
             renewDisplayLink()
@@ -231,7 +175,10 @@ public final class SwiftTickerView: GLKView {
         }
     }
     
-    public func stop() {
+    /**
+     Stops the ticker from rendering the content
+     */
+    open func stop() {
         guard isRunning else {
             return
         }
@@ -241,30 +188,57 @@ public final class SwiftTickerView: GLKView {
         displayLink?.isPaused = true
     }
     
-    public func registerView(for separator: UIView.Type) {
+    /**
+     Sets a custom separator view that will be created during runtime
+     
+     - Parameter separator: custom separator view type
+     */
+    open func registerView(for separator: UIView.Type) {
         separatorView = separator
     }
     
-    public func registerNib(for separator: UINib) {
+    /**
+     Sets a separator nip that will be created during runtime
+     
+     - Parameter separator: custom separator nib
+     */
+    open func registerNib(for separator: UINib) {
         separatorNib = separator
     }
     
-    public func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
+    /**
+     Register a nodeview view type for a specific identifier, that can be dequed during runtime
+     
+     - Parameter nodeView: custom node view type
+     
+     - Parameter identifier: reused identifier
+     */
+    open func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
         registeredNodeViews[identifier] = nodeView
     }
     
-    public func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
+    /**
+     Register a nodeview view nib for a specific identifier, that can be dequed during runtime
+     
+     - Parameter nodeView: custom node view nib
+     
+     - Parameter identifier: reused identifier
+     */
+    open func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
         registeredNodeViews[identifier] = nodeView
     }
     
-    public func dequeueReusableSeparator() -> UIView? {
-        if let separator = separator {
-            if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
-                let view = reusableSeparatorViews[index].view
-                reusableSeparatorViews.remove(at: index)
-                return view
-            }
-            
+    /**
+     Returns a dequed separator. If there is nothing to deque and a 'separator' e.g. '+++' is given, a label is being instantiated of if a 'separatorView' type is given, it will be instantiated of if a 'separatorNib' is given, the nib will be instantiated
+     
+     - Return: dequed or created separator view
+     */
+    open func dequeueReusableSeparator() -> UIView? {
+        if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
+            let view = reusableSeparatorViews[index].view
+            reusableSeparatorViews.remove(at: index)
+            return view
+        } else if let separator = separator {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             label.text = separator
             label.numberOfLines = 1
@@ -278,7 +252,12 @@ public final class SwiftTickerView: GLKView {
         return nil
     }
     
-    public func dequeReusableNodeView(for identifier: String) -> UIView? {
+    /**
+     Returns a dequed node view by the given identifier. If there is nothing to deque and a 'nodeView' type is given, it will be instantiated of if a nib is given, the nib will be instantiated
+     
+     - Return: dequed or created separator view
+     */
+    open func dequeReusableNodeView(for identifier: String) -> UIView? {
         if let index = reusableNodeViews.index(where: { $0.key == identifier }) {
             let view = reusableNodeViews[index].view
             reusableNodeViews.remove(at: index)
@@ -296,6 +275,17 @@ public final class SwiftTickerView: GLKView {
         }
         
         return nil
+    }
+    
+    /**
+     Clears all nodes from the ticker view. If the view is still running, it will instantly start to render the content if provided
+     
+     WARNING: use carefully. If the ticker view is still running, this may look edgy
+     */
+    open func reloadData() {
+        nodeViews.forEach {
+            removeNode($0.view)
+        }
     }
     
     //MARK: - Private
@@ -366,7 +356,7 @@ public final class SwiftTickerView: GLKView {
         if let view = nodeViews.first(where: {
             $0.key != separatorIdentifier && $0.view.frame.intersects(rect)
         }) {
-          tickerDelegate?.tickerView(didPress: view.view, content: view.content)
+            tickerDelegate?.tickerView(didPress: view.view, content: view.content)
         }
         start()
     }
@@ -438,8 +428,13 @@ public final class SwiftTickerView: GLKView {
     private func removeNodeIfNeeded(_ nodeView: UIView?) {
         guard let nodeView = nodeView else { return }
         
-        if viewIsOutOfBounds(nodeView),
-            let index = nodeViews.index(where: { $0.view === nodeView }) {
+        if viewIsOutOfBounds(nodeView) {
+            removeNode(nodeView)
+        }
+    }
+    
+    private func removeNode(_ nodeView: UIView) {
+        if let index = nodeViews.index(where: { $0.view === nodeView }) {
             let nodeView = nodeViews[index]
             if nodeView.key == separatorIdentifier {
                 reusableSeparatorViews.append((nodeView.key, nodeView.view))
@@ -497,16 +492,16 @@ public final class SwiftTickerView: GLKView {
     private var framesPerSecond: Int {
         guard let displayLink = displayLink,
             displayLink.duration > 0 else {
-            return 0
+                return 0
         }
         return Int(round(1000 / displayLink.duration)/1000)
     }
     
     fileprivate func updateTickerNodeViewPosition() {
         let offset = pixelPerSecond / CGFloat(framesPerSecond)
-        nodeViews.forEach({[weak self] in
+        nodeViews.forEach { [weak self] in
             self?.update(node: $0.view, offset: offset)
-        })
+        }
         
         removeNodeIfNeeded(nodeViews.first?.view)
         addNewNodeIfNeeded()
