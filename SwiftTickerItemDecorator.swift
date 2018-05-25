@@ -3,6 +3,15 @@ import UIKit
 public protocol SwiftTickerItemDecorator { }
 
 public struct SwiftTickerItemDecorators {
+    /**
+     InitialRenderer
+     
+     Aligns the items left to each other
+     
+     This is used in the rightToLeft Rendering option
+     
+     - Parameter customOffset: A custom offset to each item
+     */
     public static func alignItemsLeftToEachOther(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -23,6 +32,16 @@ public struct SwiftTickerItemDecorators {
         }
         return Anonymous(customOffset: customOffset)
     }
+    
+    /**
+     InitialRenderer
+     
+     Aligns the items right to each other
+     
+     This is used in the leftToRight Rendering option
+     
+     - Parameter customOffset: A custom offset to each item
+     */
     
     public static func alignItemsRightToEachOther(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
@@ -45,6 +64,16 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the items below each other
+     
+     This is used in the bottomToTop Rendering option
+     
+     - Parameter customOffset: A custom offset to each item
+     */
+    
     public static func alignItemsBelowEachOther(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -65,6 +94,16 @@ public struct SwiftTickerItemDecorators {
         }
         return Anonymous(customOffset: customOffset)
     }
+    
+    /**
+     InitialRenderer
+     
+     Aligns the items above each other
+     
+     This is used in the topToBottom Rendering option
+     
+     - Parameter customOffset: A custom offset to each item
+     */
     
     public static func alignItemsAboveEachOther(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
@@ -87,6 +126,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the right border so that it is not visible in the beginning
+     
+     This is used in the rightToLeft Rendering option
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtRightOuterBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -108,6 +156,13 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the right border so that it is visible in the beginning
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtRightInnerBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -129,6 +184,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the left border so that it is not visible in the beginning
+     
+     This is used in the leftToRight Rendering option
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtLeftOuterBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -150,6 +214,13 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the left border so that it is visible in the beginning
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtLeftInnerBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -171,6 +242,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the bottom border so that it is not visible in the beginning
+     
+     This is used in the bottomToTop Rendering option
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtBottomOuterBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -191,6 +271,13 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the left border so that it is visible in the beginning
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtBottomInnerBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -211,6 +298,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at the top border so that it is not visible in the beginning
+     
+     This is used in the topToBottom Rendering option
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtTopOuterBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -231,6 +327,13 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the first item at top border so that it is visible in the beginning
+     
+     - Parameter customOffset: A custom offset to the border
+     */
     public static func prepareAtTopInnerBorder(with customOffset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -251,6 +354,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(customOffset: customOffset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the items vertically centered in the view
+     
+     This is used in the leftToRight and rightToLeft Rendering option
+     
+     - Parameter customOffset: A custom offset from the vertical center
+     */
     public static func centerVertical(with offset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -268,6 +380,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(offset: offset)
     }
     
+    /**
+     InitialRenderer
+     
+     Aligns the items horizontally centered in the view
+     
+     This is used in the topToBottom and bottomToTop Rendering option
+     
+     - Parameter customOffset: A custom offset from the horizontal center
+     */
     public static func centerHorizontal(with offset: CGFloat? = nil) -> SwiftTickerItemDecorator & InitialRenderer {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
@@ -285,6 +406,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(offset: offset)
     }
     
+    /**
+     UpdateRenderer
+     
+     Updates the x position of the view
+     
+     This is used in the leftToRight and rightToLeft Rendering option
+     
+     - Parameter function: Use an oparator eg (+, -, *, /,...)
+     */
     public static func updateX(_ function: @escaping (CGFloat, CGFloat) -> CGFloat) -> SwiftTickerItemDecorator & UpdateRenderer {
         struct Anonymous: SwiftTickerItemDecorator, UpdateRenderer {
             func updateWith(current: UIView, offset: CGFloat) {
@@ -302,6 +432,15 @@ public struct SwiftTickerItemDecorators {
         return Anonymous(function)
     }
     
+    /**
+     UpdateRenderer
+     
+     Updates the y position of the view
+     
+     This is used in the topToBottom and bottomToTop Rendering option
+     
+     - Parameter function: Use an oparator eg (+, -, *, /,...)
+     */
     public static func updateY(_ function: @escaping (CGFloat, CGFloat) -> CGFloat) -> SwiftTickerItemDecorator & UpdateRenderer {
         struct Anonymous: SwiftTickerItemDecorator, UpdateRenderer {
             func updateWith(current: UIView, offset: CGFloat) {

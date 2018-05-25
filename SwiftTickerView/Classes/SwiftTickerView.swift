@@ -8,7 +8,6 @@
 
 import GLKit
 
-
 public protocol SwiftTickerProviderProtocol {
     var hasContent: Bool { get }
     var next: Any { get }
@@ -50,7 +49,6 @@ open class SwiftTickerView: GLKView {
         case ignoreAllSeparators
     }
     
-    @available(*, deprecated: 1.0.0, message: "Moved from 'SwiftTickerView.Renderer' to 'Renderer'")
     
     @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
     public enum Direction {
@@ -67,6 +65,10 @@ open class SwiftTickerView: GLKView {
     @available(*, unavailable, renamed: "render")
     public var direction: Direction?
     
+    /**
+     Assign a custom renderer to allow the content to be rendered on the ticker view.
+     Default is rightToLeft
+     */
     public var render: SwiftTickerContentRenderer = Renderer.rightToLeft {
         didSet {
             guard isRunning else {
@@ -77,16 +79,33 @@ open class SwiftTickerView: GLKView {
         }
     }
     
+    /**
+     Set a custom pixelPerSeconds to increase or decrease the update interval of the content.
+     Default is 60
+     WARNING: The more you increase this value, the more it looks stuttering
+     */
     public var pixelPerSecond: CGFloat = 60 {
         didSet {
             renewDisplayLink()
         }
     }
+    
+    /**
+     Asign a custom separator
+     */
     public var separator: String?
     private var separatorView: UIView.Type?
     private var separatorNib: UINib?
     
+    /**
+     Use this as offset between the items rendered on the ticker view
+     Default is 8 pixel
+     */
     public var distanceBetweenNodes: CGFloat = 8
+    
+    /**
+     Determine if the tickerview is rendering the content or has been stopped
+     */
     public private(set) var isRunning = false
     
     private var lastNodeWasSeparator = false
@@ -97,8 +116,17 @@ open class SwiftTickerView: GLKView {
     private var reusableNodeViews = [(key: String, view: UIView)]()
     private var registeredNodeViews = [String: Any]()
     
+    /**
+     Asign a custom content provider.
+     */
     public var contentProvider: SwiftTickerProviderProtocol?
+    /**
+     Asign a custom view provider
+     */
     public var viewProvider: SwiftTickerViewProvider?
+    /**
+     Asign a custom delegate
+     */
     public weak var tickerDelegate: SwiftTickerDelegate?
     
     @IBOutlet public weak var button: UIButton!
@@ -124,7 +152,12 @@ open class SwiftTickerView: GLKView {
         displayLink?.invalidate()
     }
     
-    public func add(decorator: Decorator) {
+    /**
+     Adds a decorator to the tickerview
+     
+     - Parameter decorator: a protocol to customize the view behavior
+     */
+    open func add(decorator: Decorator) {
         switch decorator {
         case .ignoreFirstSeparator:
             if !isRunning {
@@ -135,7 +168,10 @@ open class SwiftTickerView: GLKView {
         }
     }
     
-    public func start() {
+    /**
+     Starts the ticker view rendering
+     */
+    open func start() {
         tickerDelegate?.tickerView(willStart: self)
         if isRunning {
             renewDisplayLink()
@@ -144,7 +180,10 @@ open class SwiftTickerView: GLKView {
         }
     }
     
-    public func stop() {
+    /**
+     Stops the ticker from rendering the content
+     */
+    open func stop() {
         guard isRunning else {
             return
         }
@@ -154,30 +193,57 @@ open class SwiftTickerView: GLKView {
         displayLink?.isPaused = true
     }
     
-    public func registerView(for separator: UIView.Type) {
+    /**
+     Sets a custom separator view that will be created during runtime
+     
+     - Parameter separator: custom separator view type
+     */
+    open func registerView(for separator: UIView.Type) {
         separatorView = separator
     }
     
-    public func registerNib(for separator: UINib) {
+    /**
+     Sets a separator nip that will be created during runtime
+     
+     - Parameter separator: custom separator nib
+     */
+    open func registerNib(for separator: UINib) {
         separatorNib = separator
     }
     
-    public func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
+    /**
+     Register a nodeview view type for a specific identifier, that can be dequed during runtime
+     
+     - Parameter nodeView: custom node view type
+     
+     - Parameter identifier: reused identifier
+     */
+    open func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
         registeredNodeViews[identifier] = nodeView
     }
     
-    public func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
+    /**
+     Register a nodeview view nib for a specific identifier, that can be dequed during runtime
+     
+     - Parameter nodeView: custom node view nib
+     
+     - Parameter identifier: reused identifier
+     */
+    open func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
         registeredNodeViews[identifier] = nodeView
     }
     
-    public func dequeueReusableSeparator() -> UIView? {
-        if let separator = separator {
-            if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
-                let view = reusableSeparatorViews[index].view
-                reusableSeparatorViews.remove(at: index)
-                return view
-            }
-            
+    /**
+     Returns a dequed separator. If there is nothing to deque and a 'separator' e.g. '+++' is given, a label is being instantiated of if a 'separatorView' type is given, it will be instantiated of if a 'separatorNib' is given, the nib will be instantiated
+     
+     - Return: dequed or created separator view
+     */
+    open func dequeueReusableSeparator() -> UIView? {
+        if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
+            let view = reusableSeparatorViews[index].view
+            reusableSeparatorViews.remove(at: index)
+            return view
+        } else if let separator = separator {
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
             label.text = separator
             label.numberOfLines = 1
@@ -191,7 +257,12 @@ open class SwiftTickerView: GLKView {
         return nil
     }
     
-    public func dequeReusableNodeView(for identifier: String) -> UIView? {
+    /**
+     Returns a dequed node view by the given identifier. If there is nothing to deque and a 'nodeView' type is given, it will be instantiated of if a nib is given, the nib will be instantiated
+     
+     - Return: dequed or created separator view
+     */
+    open func dequeReusableNodeView(for identifier: String) -> UIView? {
         if let index = reusableNodeViews.index(where: { $0.key == identifier }) {
             let view = reusableNodeViews[index].view
             reusableNodeViews.remove(at: index)
@@ -209,6 +280,17 @@ open class SwiftTickerView: GLKView {
         }
         
         return nil
+    }
+    
+    /**
+     Clears all nodes from the ticker view. If the view is still running, it will instantly start to render the content if provided
+     
+     WARNING: use carefully. If the ticker view is still running, this may look edgy
+     */
+    open func reloadData() {
+        nodeViews.forEach {
+            removeNode($0.view)
+        }
     }
     
     //MARK: - Private
@@ -351,8 +433,13 @@ open class SwiftTickerView: GLKView {
     private func removeNodeIfNeeded(_ nodeView: UIView?) {
         guard let nodeView = nodeView else { return }
         
-        if viewIsOutOfBounds(nodeView),
-            let index = nodeViews.index(where: { $0.view === nodeView }) {
+        if viewIsOutOfBounds(nodeView) {
+            removeNode(nodeView)
+        }
+    }
+    
+    private func removeNode(_ nodeView: UIView) {
+        if let index = nodeViews.index(where: { $0.view === nodeView }) {
             let nodeView = nodeViews[index]
             if nodeView.key == separatorIdentifier {
                 reusableSeparatorViews.append((nodeView.key, nodeView.view))
