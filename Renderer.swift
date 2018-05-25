@@ -115,7 +115,7 @@ open class Renderer: SwiftTickerContentRenderer {
     open func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
         initials.forEach {
             $0.updateWith(current: nodeView,
-                          last: last,
+                          last: last?.superview != nil ? last : nil,
                           tickerView: tickerView,
                           offset: tickerView.distanceBetweenNodes) }
         last = nodeView
