@@ -40,6 +40,8 @@ public protocol UpdateRenderer {
     func updateWith(current: UIView, offset: CGFloat)
 }
 
+public protocol SwiftTickerItemDecorator { }
+
 open class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
