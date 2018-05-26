@@ -1,7 +1,5 @@
 import UIKit
 
-public protocol SwiftTickerItemDecorator { }
-
 public struct SwiftTickerItemDecorators {
     /**
      InitialRenderer
