@@ -1,6 +1,6 @@
 import UIKit
 
-open class Renderer: SwiftTickerContentRenderer {
+public class Renderer: SwiftTickerContentRenderer {
     public typealias ShouldAddNewNode = ((UIView, SwiftTickerView, CGFloat) -> Bool)
     public typealias ShouldRemoveNode = ((UIView, SwiftTickerView) -> Bool)
     
@@ -9,7 +9,7 @@ open class Renderer: SwiftTickerContentRenderer {
      
      - Parameter initial: Must conform to the InitialRenderer and SwiftTickerItemDecorator protocol
      */
-    open func customize(with initial: SwiftTickerItemDecorator & InitialRenderer) -> Renderer {
+    public func customize(with initial: SwiftTickerItemDecorator & InitialRenderer) -> Renderer {
         initials.append(initial)
         return self
     }
@@ -19,7 +19,7 @@ open class Renderer: SwiftTickerContentRenderer {
      
      - Parameter update: Must conform to the UpdateRenderer and SwiftTickerItemDecorator protocol
      */
-    open func customize(with update: SwiftTickerItemDecorator & UpdateRenderer) -> Renderer {
+    public func customize(with update: SwiftTickerItemDecorator & UpdateRenderer) -> Renderer {
         updates.append(update)
         return self
     }
@@ -100,19 +100,19 @@ open class Renderer: SwiftTickerContentRenderer {
         self.shouldRemoveNode = shouldRemoveNode
     }
 
-    open func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat) {
+    public func tickerViewUpdate(_ tickerView: SwiftTickerView, render nodeView: UIView, offset: CGFloat) {
         updates.forEach { $0.updateWith(current: nodeView, offset: offset) }
     }
     
-    open func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool {
+    public func tickerViewShouldAddNext(_ tickerView: SwiftTickerView, current nodeView: UIView) -> Bool {
         return shouldAddNewNode(nodeView, tickerView, tickerView.distanceBetweenNodes)
     }
     
-    open func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool {
+    public func tickerViewShouldRemove(_ tickerView: SwiftTickerView, nodeView: UIView) -> Bool {
         return shouldRemoveNode(nodeView, tickerView)
     }
     
-    open func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
+    public func tickerView(_ tickerView: SwiftTickerView, render nodeView: UIView, with identifier: String) {
         initials.forEach {
             $0.updateWith(current: nodeView,
                           last: last?.superview != nil ? last : nil,
