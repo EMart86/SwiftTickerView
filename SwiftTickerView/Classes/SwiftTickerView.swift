@@ -42,7 +42,7 @@ public protocol UpdateRenderer {
 
 public protocol SwiftTickerItemDecorator { }
 
-public class SwiftTickerView: GLKView {
+open class SwiftTickerView: GLKView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
     
@@ -130,7 +130,7 @@ public class SwiftTickerView: GLKView {
     
     @IBOutlet public weak var button: UIButton!
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         
         setupOpenGl()
@@ -156,7 +156,7 @@ public class SwiftTickerView: GLKView {
      
      - Parameter decorator: a protocol to customize the view behavior
      */
-    public func add(decorator: Decorator) {
+    open func add(decorator: Decorator) {
         switch decorator {
         case .ignoreFirstSeparator:
             if !isRunning {
@@ -168,7 +168,7 @@ public class SwiftTickerView: GLKView {
     /**
      Starts the ticker view rendering
      */
-    public func start() {
+    open func start() {
         tickerDelegate?.tickerView(willStart: self)
         if isRunning {
             renewDisplayLink()
@@ -180,7 +180,7 @@ public class SwiftTickerView: GLKView {
     /**
      Stops the ticker from rendering the content
      */
-    public func stop() {
+    open func stop() {
         guard isRunning else {
             return
         }
@@ -195,7 +195,7 @@ public class SwiftTickerView: GLKView {
      
      - Parameter separator: custom separator view type
      */
-    public func registerView(for separator: UIView.Type) {
+    open func registerView(for separator: UIView.Type) {
         separatorView = separator
     }
     
@@ -204,7 +204,7 @@ public class SwiftTickerView: GLKView {
      
      - Parameter separator: custom separator nib
      */
-    public func registerNib(for separator: UINib) {
+    open func registerNib(for separator: UINib) {
         separatorNib = separator
     }
     
@@ -215,7 +215,7 @@ public class SwiftTickerView: GLKView {
      
      - Parameter identifier: reused identifier
      */
-    public func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
+    open func registerNodeView(_ nodeView: UIView.Type, for identifier: String) {
         registeredNodeViews[identifier] = nodeView
     }
     
@@ -226,7 +226,7 @@ public class SwiftTickerView: GLKView {
      
      - Parameter identifier: reused identifier
      */
-    public func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
+    open func registerNodeViewNib(_ nodeView: UINib, for identifier: String) {
         registeredNodeViews[identifier] = nodeView
     }
     
@@ -235,7 +235,7 @@ public class SwiftTickerView: GLKView {
      
      - Return: dequed or created separator view
      */
-    public func dequeueReusableSeparator() -> UIView? {
+    open func dequeueReusableSeparator() -> UIView? {
         if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
             let view = reusableSeparatorViews[index].view
             reusableSeparatorViews.remove(at: index)
@@ -259,7 +259,7 @@ public class SwiftTickerView: GLKView {
      
      - Return: dequed or created separator view
      */
-    public func dequeReusableNodeView(for identifier: String) -> UIView? {
+    open func dequeReusableNodeView(for identifier: String) -> UIView? {
         if let index = reusableNodeViews.index(where: { $0.key == identifier }) {
             let view = reusableNodeViews[index].view
             reusableNodeViews.remove(at: index)
@@ -284,7 +284,7 @@ public class SwiftTickerView: GLKView {
      
      WARNING: use carefully. If the ticker view is still running, this may look edgy
      */
-    public func reloadData() {
+    open func reloadData() {
         nodeViews.forEach {
             removeNode($0.view)
         }
