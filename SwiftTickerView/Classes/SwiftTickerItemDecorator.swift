@@ -226,7 +226,7 @@ public struct SwiftTickerItemDecorators {
                     return
                 }
                 var frame = current.frame
-                frame.origin.x = customOffset ?? 0
+                frame.origin.x = customOffset ?? offset
                 current.frame = frame
             }
             
@@ -365,17 +365,17 @@ public struct SwiftTickerItemDecorators {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
                 var frame = current.frame
-                frame.origin.y = ((tickerView.frame.height - frame.height) / 2) + (offset ?? 0)
+                frame.origin.y = ((tickerView.frame.height - frame.height) / 2) + (customOffset ?? 0)
                 current.frame = frame
             }
             
-            init(offset: CGFloat? = nil) {
-                self.offset = offset
+            init(customOffset: CGFloat? = nil) {
+                self.customOffset = customOffset
             }
             
-            let offset: CGFloat?
+            let customOffset: CGFloat?
         }
-        return Anonymous(offset: offset)
+        return Anonymous(customOffset: offset)
     }
     
     /**
@@ -391,17 +391,17 @@ public struct SwiftTickerItemDecorators {
         struct Anonymous: SwiftTickerItemDecorator, InitialRenderer {
             func updateWith(current: UIView, last: UIView?, tickerView: SwiftTickerView, offset: CGFloat) {
                 var frame = current.frame
-                frame.origin.x = ((tickerView.frame.width - frame.width) / 2) + (offset ?? 0)
+                frame.origin.x = ((tickerView.frame.width - frame.width) / 2) + (customOffset ?? 0)
                 current.frame = frame
             }
             
-            init(offset: CGFloat? = nil) {
-                self.offset = offset
+            init(customOffset: CGFloat? = nil) {
+                self.customOffset = customOffset
             }
             
-            let offset: CGFloat?
+            let customOffset: CGFloat?
         }
-        return Anonymous(offset: offset)
+        return Anonymous(customOffset: offset)
     }
     
     /**

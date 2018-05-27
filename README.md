@@ -7,6 +7,11 @@
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
 
+## 1.4.1
+
+### Fixes
+- Fix center vertical and horizontal
+
 ## 1.4.0
 
 ###  Customize the Renderer easily by adding a new decorators:

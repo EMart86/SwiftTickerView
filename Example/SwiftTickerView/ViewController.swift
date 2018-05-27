@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         
         tickerView.contentProvider = tickerContentProvider
         tickerView.viewProvider = self
-//        tickerView.separator = "+++"
+        tickerView.separator = "+++"
 //        tickerView.render = Renderer(initials: [SwiftTickerItemDecorators.centerHorizontal(),
 //                                                SwiftTickerItemDecorators.alignItemsAboveEachOther(),
 //                                                SwiftTickerItemDecorators.prepareAtTopOuterBorder()],
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
 //        }, shouldRemoveNode: { current, tickerView in
 //            current.frame.minY > tickerView.frame.maxY
 //        })
-        tickerView.render = Renderer.topToBottom.customize(with: SwiftTickerItemDecorators.prepareAtBottomInnerBorder(with: 8))
+        tickerView.render = Renderer.rightToLeft.customize(with: SwiftTickerItemDecorators.prepareAtLeftInnerBorder())
         tickerView.add(decorator: .ignoreFirstSeparator)
         tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
         tickerView.tickerDelegate = self
