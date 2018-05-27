@@ -226,7 +226,7 @@ public struct SwiftTickerItemDecorators {
                     return
                 }
                 var frame = current.frame
-                frame.origin.x = customOffset ?? 0
+                frame.origin.x = customOffset ?? offset
                 current.frame = frame
             }
             
