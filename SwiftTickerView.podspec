@@ -26,5 +26,5 @@ A swift ticker, written in swift. The one, with those '+++' separators ;)
   s.ios.deployment_target = '10.0'
   s.tvos.deployment_target = '10.0'
 
-  s.source_files = 'SwiftTickerView/Classes/**/*'
+  s.source_files = 'SwiftTickerView/Classes/*'
 end
