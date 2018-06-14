@@ -50,6 +50,8 @@ open class SwiftTickerView: GLKView {
         case ignoreFirstSeparator
     }
     
+    private var decorators = [Decorator]()
+    
     @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
     public enum Direction {
         @available(*, unavailable, renamed: "SwiftTickerView.Renderer.rightToLeft")
@@ -157,12 +159,12 @@ open class SwiftTickerView: GLKView {
      - Parameter decorator: a protocol to customize the view behavior
      */
     open func add(decorator: Decorator) {
-        switch decorator {
-        case .ignoreFirstSeparator:
-            if !isRunning {
-                lastNodeWasSeparator = true
-            }
+        guard !decorators.contains(decorator) else {
+            return
         }
+        
+        decorators.append(decorator)
+        apply(decorator: decorator)
     }
     
     /**
@@ -288,6 +290,11 @@ open class SwiftTickerView: GLKView {
         nodeViews.forEach {
             removeNode($0.view)
         }
+        decorators.forEach { [weak self] decorator in
+            self?.apply(decorator: decorator)
+        }
+        while addNewNodeIfNeeded() {
+        }
     }
     
     //MARK: - Private
@@ -388,6 +395,15 @@ open class SwiftTickerView: GLKView {
         displayLink?.add(to: .main, forMode:.commonModes)
     }
     
+    private func apply(decorator: Decorator) {
+        switch decorator {
+        case .ignoreFirstSeparator:
+            if !isRunning {
+                lastNodeWasSeparator = true
+            }
+        }
+    }
+    
     private func resume() {
         guard !isRunning,
             let contentProvider = contentProvider,
@@ -448,17 +464,15 @@ open class SwiftTickerView: GLKView {
         }
     }
     
-    private func addNewNodeIfNeeded() {
-        if shouldAddView {
-            addNode()
+    private func addNewNodeIfNeeded() -> Bool {
+        guard shouldAddView else {
+            return false
         }
+        addNode()
+        return true
     }
     
     private func addNode() {
-        guard isRunning else {
-            return
-        }
-        
         if lastNodeWasSeparator {
             lastNodeWasSeparator = false
         } else {

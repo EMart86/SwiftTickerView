@@ -7,6 +7,11 @@
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
 
+## 1.4.2
+
+### Fixes
+- Fixes ignoreSeparator on startup when calling reloadData #5
+
 ## 1.4.1
 
 ### Fixes

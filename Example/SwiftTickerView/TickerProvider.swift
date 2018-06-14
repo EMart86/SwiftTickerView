@@ -40,6 +40,7 @@ final class TickerProvider: SwiftTickerProviderProtocol {
     func updateContent() {
         if !superContent.indices.contains(contentIndex) {
             index = 0
+            contentIndex = 0
         }
         let next = superContent[contentIndex]
         contentIndex += 1

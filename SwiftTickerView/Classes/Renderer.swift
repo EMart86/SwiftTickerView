@@ -32,7 +32,10 @@ open class Renderer: SwiftTickerContentRenderer {
                                                         SwiftTickerItemDecorators.centerVertical()],
                                              updates: [SwiftTickerItemDecorators.updateX(-)],
                                              shouldAddNewNode: { current, tickerView, offset in
-                                                tickerView.frame.width - current.frame.maxX > offset
+                                                if current.frame.maxX == -CGFloat.infinity {
+                                                    return false
+                                                }
+                                                return tickerView.frame.width - current.frame.maxX > offset
     }, shouldRemoveNode: { current, _ in
         current.frame.maxX < 0
     })
