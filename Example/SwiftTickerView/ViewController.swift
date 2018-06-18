@@ -20,23 +20,25 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        tickerView.contentProvider = tickerContentProvider
-        tickerView.viewProvider = self
-        tickerView.separator = "+++"
-//        tickerView.render = Renderer(initials: [SwiftTickerItemDecorators.centerHorizontal(),
-//                                                SwiftTickerItemDecorators.alignItemsAboveEachOther(),
-//                                                SwiftTickerItemDecorators.prepareAtTopOuterBorder()],
-//                                     updates: [SwiftTickerItemDecorators.updateY(+)],
-//                                     shouldAddNewNode: { current, _, offset in
-//                                        current.frame.minY > offset
-//        }, shouldRemoveNode: { current, tickerView in
-//            current.frame.minY > tickerView.frame.maxY
-//        })
-        tickerView.render = Renderer.rightToLeft.customize(with: SwiftTickerItemDecorators.prepareAtLeftInnerBorder())
-        tickerView.add(decorator: .ignoreFirstSeparator)
-        tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
-        tickerView.tickerDelegate = self
-        tickerView.reloadData()
+        setupTickerView(tickerView, dataSet: ["A", "B", "C"])
+        
+//        tickerView.contentProvider = tickerContentProvider
+//        tickerView.viewProvider = self
+//        tickerView.separator = "+++"
+////        tickerView.render = Renderer(initials: [SwiftTickerItemDecorators.centerHorizontal(),
+////                                                SwiftTickerItemDecorators.alignItemsAboveEachOther(),
+////                                                SwiftTickerItemDecorators.prepareAtTopOuterBorder()],
+////                                     updates: [SwiftTickerItemDecorators.updateY(+)],
+////                                     shouldAddNewNode: { current, _, offset in
+////                                        current.frame.minY > offset
+////        }, shouldRemoveNode: { current, tickerView in
+////            current.frame.minY > tickerView.frame.maxY
+////        })
+//        tickerView.render = Renderer.rightToLeft/*.customize(with: SwiftTickerItemDecorators.prepareAtLeftInnerBorder())*/
+//        tickerView.add(decorator: .ignoreFirstSeparator)
+//        tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
+//        tickerView.tickerDelegate = self
+//        tickerView.reloadData()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +63,18 @@ class ViewController: UIViewController {
         tickerContentProvider.updateContent()
         tickerView.reloadData()
     }
+    
+    func setupTickerView(_ tickerView: SwiftTickerView, dataSet: [String]) {
+        tickerView.contentProvider = tickerContentProvider
+        tickerView.viewProvider = self
+        tickerView.separator = "..."
+        tickerView.add(decorator: .ignoreFirstSeparator)
+        tickerView.distanceBetweenNodes = 10
+        tickerView.render = Renderer.rightToLeft
+        tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
+        tickerView.tickerDelegate = self
+    }
+
 }
 
 extension ViewController: SwiftTickerDelegate {

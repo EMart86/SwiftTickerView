@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftTickerView'
-  s.version          = '1.4.2'
+  s.version          = '1.4.3'
   s.summary          = 'A simple news ticker view'
   s.swift_version    = '4.0'
 
@@ -23,8 +23,8 @@ A swift ticker, written in swift. The one, with those '+++' separators ;)
   s.source           = { :git => 'https://github.com/EMart86/SwiftTickerView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
-  s.tvos.deployment_target = '10.0'
+  s.ios.deployment_target = '9.0'
+  s.tvos.deployment_target = '9.0'
 
   s.source_files = 'SwiftTickerView/Classes/*'
 end

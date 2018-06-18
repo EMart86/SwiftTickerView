@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         tickerView.viewProvider = self
         tickerView.separator = "+++"
         tickerView.registerNodeView(UILabel.self, for: labelIdentifier)
-        tickerView.direction = .horizontalRightToLeft
+        tickerView.render = Renderer.rightToLeft
         tickerView.tickerDelegate = self
     }
 
