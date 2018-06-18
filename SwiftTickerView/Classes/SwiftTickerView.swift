@@ -380,7 +380,7 @@ open class SwiftTickerView: GLKView {
             if #available(iOS 10.0, tvOS 10.0, *) {
                 displayLink?.preferredFramesPerSecond = Int(pixelPerSecond)
             } else {
-                displayLink?.frameInterval = Int(pixelPerSecond)
+                displayLink?.frameInterval = Int(pixelPerSecond/60)
             }
             return
         }
@@ -390,7 +390,7 @@ open class SwiftTickerView: GLKView {
         if #available(iOS 10.0, tvOS 10.0, *) {
             displayLink?.preferredFramesPerSecond = Int(pixelPerSecond)
         } else {
-            displayLink?.frameInterval = Int(pixelPerSecond)
+            displayLink?.frameInterval = Int(pixelPerSecond/60)
         }
         displayLink?.add(to: .main, forMode:.commonModes)
     }

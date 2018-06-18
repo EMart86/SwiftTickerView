@@ -7,6 +7,10 @@
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
 
+## 1.4.3
+
+- Add support for iOS 9
+
 ## 1.4.2
 
 ### Fixes
