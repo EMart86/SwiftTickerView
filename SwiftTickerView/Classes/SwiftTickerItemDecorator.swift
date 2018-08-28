@@ -413,6 +413,32 @@ public struct SwiftTickerItemDecorators {
      
      - Parameter function: Use an oparator eg (+, -, *, /,...)
      */
+    public static func accellerateX(_ function: @escaping (CGFloat, CGFloat, to finalSpeed: ) -> CGFloat) -> SwiftTickerItemDecorator & UpdateRenderer {
+        struct Anonymous: SwiftTickerItemDecorator, UpdateRenderer {
+            func updateWith(current: UIView, offset: CGFloat) {
+                var frame = current.frame
+                frame.origin.x = function(frame.origin.x, offset)
+                current.frame = frame
+            }
+            
+            init(_ function: @escaping (CGFloat, CGFloat) -> CGFloat) {
+                self.function = function
+            }
+            
+            let function: (CGFloat, CGFloat) -> CGFloat
+        }
+        return Anonymous(function)
+    }
+    
+    /**
+     UpdateRenderer
+     
+     Updates the x position of the view
+     
+     This is used in the leftToRight and rightToLeft Rendering option
+     
+     - Parameter function: Use an oparator eg (+, -, *, /,...)
+     */
     public static func updateX(_ function: @escaping (CGFloat, CGFloat) -> CGFloat) -> SwiftTickerItemDecorator & UpdateRenderer {
         struct Anonymous: SwiftTickerItemDecorator, UpdateRenderer {
             func updateWith(current: UIView, offset: CGFloat) {

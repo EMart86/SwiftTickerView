@@ -18,6 +18,8 @@ public protocol SwiftTickerDelegate: class {
     func tickerView(willStart ticker: SwiftTickerView)
     func tickerView(willStop ticker: SwiftTickerView)
     func tickerView(didPress view: UIView, content: Any?)
+    func tickerViewDidStartDragging(_ ticker: SwiftTickerView)
+    func tickerViewDidEndDragging(_ ticker: SwiftTickerView)
 }
 
 public protocol SwiftTickerViewProvider {
@@ -48,6 +50,25 @@ open class SwiftTickerView: GLKView {
     
     public enum Decorator: SwiftTickerItemDecorator {
         case ignoreFirstSeparator
+        case draggingEnabled
+    }
+    
+    private var isDragging = false {
+        didSet {
+            guard oldValue != isDragging else {
+                return
+            }
+            if isDragging {
+                wasRunningBeforeDragging = isRunning
+                stop()
+                tickerDelegate?.tickerViewDidStartDragging(self)
+            } else {
+                if wasRunningBeforeDragging {
+                    resume()
+                }
+                tickerDelegate?.tickerViewDidEndDragging(self)
+            }
+        }
     }
     
     private var decorators = [Decorator]()
@@ -108,6 +129,7 @@ open class SwiftTickerView: GLKView {
     /**
      Determine if the tickerview is rendering the content or has been stopped
      */
+    private var wasRunningBeforeDragging = false
     public private(set) var isRunning = false
     
     private var lastNodeWasSeparator = false
@@ -343,6 +365,19 @@ open class SwiftTickerView: GLKView {
         button.addTarget(self,
                          action: #selector(button(touchedUpOutside:)),
                          for: .touchUpOutside)
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self,
+                                                          action: #selector(panDetected(_:)))
+        button.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    @objc private func panDetected(_ sender: UIPanGestureRecognizer) {
+        if !isDragging {
+            isDragging = true
+        }
+        
+        let velocity = sender.velocity(in: self)
+        
     }
     
     @objc private func application(willResignActive application: UIApplication) {
@@ -368,10 +403,12 @@ open class SwiftTickerView: GLKView {
             tickerDelegate?.tickerView(didPress: view.view, content: view.content)
         }
         start()
+        false
     }
     
     @objc private func button(touchedUpOutside button: UIButton) {
         resume()
+        isDragging = false
     }
     
     private func renewDisplayLink() {
