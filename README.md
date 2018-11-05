@@ -1,6 +1,6 @@
 # SwiftTickerView
 
-[![CI Status](http://img.shields.io/travis/EMart86/SwiftTickerView.svg?style=flat)](https://travis-ci.org/eberl_ma@gmx.at/SwiftTickerView)
+[![CI Status](http://img.shields.io/travis/EMart86/SwiftTickerView.svg?style=flat)](https://travis-ci.org/EMart86/SwiftTickerView)
 [![Version](https://img.shields.io/cocoapods/v/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
 [![License](https://img.shields.io/cocoapods/l/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
