@@ -6,6 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
+
 I'll definately have to update this gif, it doesn't look that crappy anymore!
 
 ## 1.4.3
