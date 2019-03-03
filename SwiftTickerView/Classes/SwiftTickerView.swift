@@ -18,8 +18,8 @@ public protocol SwiftTickerDelegate: class {
     func tickerView(willStart ticker: SwiftTickerView)
     func tickerView(willStop ticker: SwiftTickerView)
     func tickerView(didPress view: UIView, content: Any?)
-    func tickerViewDidStartDragging(_ ticker: SwiftTickerView)
-    func tickerViewDidEndDragging(_ ticker: SwiftTickerView)
+//    func tickerViewDidStartDragging(_ ticker: SwiftTickerView)
+//    func tickerViewDidEndDragging(_ ticker: SwiftTickerView)
 }
 
 public protocol SwiftTickerViewProvider {
@@ -42,6 +42,18 @@ public protocol UpdateRenderer {
     func updateWith(current: UIView, offset: CGFloat)
 }
 
+public protocol Condition {
+    func meets(nodeView: UIView, tickerView: SwiftTickerView) -> Bool
+}
+
+public enum ReturnBehavior {
+    case `continue`
+    case `return`
+    case `break`
+}
+
+public typealias Action = (Renderer, SwiftTickerView) -> ReturnBehavior
+
 public protocol SwiftTickerItemDecorator { }
 
 open class SwiftTickerView: GLKView {
@@ -61,12 +73,12 @@ open class SwiftTickerView: GLKView {
             if isDragging {
                 wasRunningBeforeDragging = isRunning
                 stop()
-                tickerDelegate?.tickerViewDidStartDragging(self)
+//                tickerDelegate?.tickerViewDidStartDragging(self)
             } else {
                 if wasRunningBeforeDragging {
                     resume()
                 }
-                tickerDelegate?.tickerViewDidEndDragging(self)
+//                tickerDelegate?.tickerViewDidEndDragging(self)
             }
         }
     }
@@ -109,6 +121,10 @@ open class SwiftTickerView: GLKView {
      */
     public var pixelPerSecond: CGFloat = 60 {
         didSet {
+            guard pixelPerSecond > 0 else {
+                stop()
+                return
+            }
             renewDisplayLink()
         }
     }
@@ -375,8 +391,13 @@ open class SwiftTickerView: GLKView {
         if !isDragging {
             isDragging = true
         }
-        
-        let velocity = sender.velocity(in: self)
+//        
+//        switch sender.state {
+//        case .changed:
+//            let velocity = sender.velocity(in: self)
+//        case .ended:
+//        }
+//        
         
     }
     
@@ -403,7 +424,6 @@ open class SwiftTickerView: GLKView {
             tickerDelegate?.tickerView(didPress: view.view, content: view.content)
         }
         start()
-        false
     }
     
     @objc private func button(touchedUpOutside button: UIButton) {
@@ -412,6 +432,9 @@ open class SwiftTickerView: GLKView {
     }
     
     private func renewDisplayLink() {
+        guard pixelPerSecond > 0 else {
+            return
+        }
         guard displayLink == nil else {
             displayLink?.isPaused = false
             if #available(iOS 10.0, tvOS 10.0, *) {
@@ -438,6 +461,8 @@ open class SwiftTickerView: GLKView {
             if !isRunning {
                 lastNodeWasSeparator = true
             }
+        case .draggingEnabled:
+            break
         }
     }
     
@@ -509,10 +534,12 @@ open class SwiftTickerView: GLKView {
         return true
     }
     
+    private var hasSepatator: Bool {
+        return separator != nil || separatorNib != nil || separatorView != nil
+    }
+    
     private func addNode() {
-        if lastNodeWasSeparator {
-            lastNodeWasSeparator = false
-        } else {
+        if hasSepatator && !lastNodeWasSeparator {
             lastNodeWasSeparator = true
             let separator = dequeueReusableSeparator()
             if let separator = separator {
@@ -523,6 +550,7 @@ open class SwiftTickerView: GLKView {
             }
             return
         }
+        lastNodeWasSeparator = false
         
         if let content = contentProvider?.next,
             let nodeView = viewProvider?.tickerView(self, viewFor: content) {
@@ -552,6 +580,9 @@ open class SwiftTickerView: GLKView {
     
     fileprivate func updateTickerNodeViewPosition() {
         let offset = pixelPerSecond / CGFloat(framesPerSecond)
+        guard offset != CGFloat.infinity, offset != -CGFloat.infinity else {
+            return
+        }
         nodeViews.forEach { [weak self] in
             self?.update(node: $0.view, offset: offset)
         }
