@@ -358,12 +358,12 @@ open class SwiftTickerView: GLKView {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(didBecomeActive:)),
-                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(willResignActive:)),
-                                               name: NSNotification.Name.UIApplicationWillResignActive,
+                                               name: UIApplication.willResignActiveNotification,
                                                object: nil)
         
         if button == nil {
@@ -452,7 +452,7 @@ open class SwiftTickerView: GLKView {
         } else {
             displayLink?.frameInterval = Int(pixelPerSecond/60)
         }
-        displayLink?.add(to: .main, forMode:.commonModes)
+        displayLink?.add(to: .main, forMode: RunLoop.Mode.common)
     }
     
     private func apply(decorator: Decorator) {
