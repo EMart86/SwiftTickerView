@@ -18,6 +18,8 @@ public protocol SwiftTickerDelegate: class {
     func tickerView(willStart ticker: SwiftTickerView)
     func tickerView(willStop ticker: SwiftTickerView)
     func tickerView(didPress view: UIView, content: Any?)
+//    func tickerViewDidStartDragging(_ ticker: SwiftTickerView)
+//    func tickerViewDidEndDragging(_ ticker: SwiftTickerView)
 }
 
 public protocol SwiftTickerViewProvider {
@@ -40,6 +42,18 @@ public protocol UpdateRenderer {
     func updateWith(current: UIView, offset: CGFloat)
 }
 
+public protocol Condition {
+    func meets(nodeView: UIView, tickerView: SwiftTickerView) -> Bool
+}
+
+public enum ReturnBehavior {
+    case `continue`
+    case `return`
+    case `break`
+}
+
+public typealias Action = (Renderer, SwiftTickerView) -> ReturnBehavior
+
 public protocol SwiftTickerItemDecorator { }
 
 open class SwiftTickerView: GLKView {
@@ -48,6 +62,25 @@ open class SwiftTickerView: GLKView {
     
     public enum Decorator: SwiftTickerItemDecorator {
         case ignoreFirstSeparator
+        case draggingEnabled
+    }
+    
+    private var isDragging = false {
+        didSet {
+            guard oldValue != isDragging else {
+                return
+            }
+            if isDragging {
+                wasRunningBeforeDragging = isRunning
+                stop()
+//                tickerDelegate?.tickerViewDidStartDragging(self)
+            } else {
+                if wasRunningBeforeDragging {
+                    resume()
+                }
+//                tickerDelegate?.tickerViewDidEndDragging(self)
+            }
+        }
     }
     
     private var decorators = [Decorator]()
@@ -88,6 +121,10 @@ open class SwiftTickerView: GLKView {
      */
     public var pixelPerSecond: CGFloat = 60 {
         didSet {
+            guard pixelPerSecond > 0 else {
+                stop()
+                return
+            }
             renewDisplayLink()
         }
     }
@@ -108,6 +145,7 @@ open class SwiftTickerView: GLKView {
     /**
      Determine if the tickerview is rendering the content or has been stopped
      */
+    private var wasRunningBeforeDragging = false
     public private(set) var isRunning = false
     
     private var lastNodeWasSeparator = false
@@ -320,12 +358,12 @@ open class SwiftTickerView: GLKView {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(didBecomeActive:)),
-                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(willResignActive:)),
-                                               name: NSNotification.Name.UIApplicationWillResignActive,
+                                               name: UIApplication.willResignActiveNotification,
                                                object: nil)
         
         if button == nil {
@@ -343,6 +381,24 @@ open class SwiftTickerView: GLKView {
         button.addTarget(self,
                          action: #selector(button(touchedUpOutside:)),
                          for: .touchUpOutside)
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self,
+                                                          action: #selector(panDetected(_:)))
+        button.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    @objc private func panDetected(_ sender: UIPanGestureRecognizer) {
+        if !isDragging {
+            isDragging = true
+        }
+//        
+//        switch sender.state {
+//        case .changed:
+//            let velocity = sender.velocity(in: self)
+//        case .ended:
+//        }
+//        
+        
     }
     
     @objc private func application(willResignActive application: UIApplication) {
@@ -372,9 +428,13 @@ open class SwiftTickerView: GLKView {
     
     @objc private func button(touchedUpOutside button: UIButton) {
         resume()
+        isDragging = false
     }
     
     private func renewDisplayLink() {
+        guard pixelPerSecond > 0 else {
+            return
+        }
         guard displayLink == nil else {
             displayLink?.isPaused = false
             if #available(iOS 10.0, tvOS 10.0, *) {
@@ -392,7 +452,7 @@ open class SwiftTickerView: GLKView {
         } else {
             displayLink?.frameInterval = Int(pixelPerSecond/60)
         }
-        displayLink?.add(to: .main, forMode:.commonModes)
+        displayLink?.add(to: .main, forMode: RunLoop.Mode.common)
     }
     
     private func apply(decorator: Decorator) {
@@ -401,6 +461,8 @@ open class SwiftTickerView: GLKView {
             if !isRunning {
                 lastNodeWasSeparator = true
             }
+        case .draggingEnabled:
+            break
         }
     }
     
@@ -472,10 +534,12 @@ open class SwiftTickerView: GLKView {
         return true
     }
     
+    private var hasSepatator: Bool {
+        return separator != nil || separatorNib != nil || separatorView != nil
+    }
+    
     private func addNode() {
-        if lastNodeWasSeparator {
-            lastNodeWasSeparator = false
-        } else {
+        if hasSepatator && !lastNodeWasSeparator {
             lastNodeWasSeparator = true
             let separator = dequeueReusableSeparator()
             if let separator = separator {
@@ -486,6 +550,7 @@ open class SwiftTickerView: GLKView {
             }
             return
         }
+        lastNodeWasSeparator = false
         
         if let content = contentProvider?.next,
             let nodeView = viewProvider?.tickerView(self, viewFor: content) {
@@ -515,6 +580,9 @@ open class SwiftTickerView: GLKView {
     
     fileprivate func updateTickerNodeViewPosition() {
         let offset = pixelPerSecond / CGFloat(framesPerSecond)
+        guard offset != CGFloat.infinity, offset != -CGFloat.infinity else {
+            return
+        }
         nodeViews.forEach { [weak self] in
             self?.update(node: $0.view, offset: offset)
         }
