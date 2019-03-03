@@ -1,11 +1,12 @@
 # SwiftTickerView
 
-[![CI Status](http://img.shields.io/travis/eberl_ma@gmx.at/SwiftTickerView.svg?style=flat)](https://travis-ci.org/eberl_ma@gmx.at/SwiftTickerView)
+[![CI Status](http://img.shields.io/travis/EMart86/SwiftTickerView.svg?style=flat)](https://travis-ci.org/EMart86/SwiftTickerView)
 [![Version](https://img.shields.io/cocoapods/v/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
 [![License](https://img.shields.io/cocoapods/l/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftTickerView.svg?style=flat)](http://cocoapods.org/pods/SwiftTickerView)
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
+I'll definately have to update this gif, it doesn't look that crappy anymore!
 
 ## 1.5.0
 
@@ -114,7 +115,7 @@ tickerView.tickerDelegate = self
 
 This ticker view is designed to be able to support arabic and hebrew aswell as the other languages. Simply use the direction property, to determine if you want the content to run from left to right, from right to left, from top to bottom or from bottom to top:
 ```swift
-tickerView.direction = .horizontalRightToLeft
+tickerView.renderer = SwiftTickerView.Renderer.rightToLeft
 ```
 
 You can manage the velocity of the content to run across the display. You can alter this value at runtime aswell to increase or slow down the ticker view:
