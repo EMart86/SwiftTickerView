@@ -7,6 +7,16 @@
 
 ![Animation](https://thumbs.gfycat.com/NextFabulousEarthworm-size_restricted.gif)
 
+## 1.5.0
+
+### Following new Render decorators are vailable:
+*  ```initialRenderer(closure: (UIView, UIView?, SwiftTickerView, CGFloat) -> Void)```
+positon your node view wherever you want them to be placed
+*  ```updateRenderer(closure: (UIView, CGFloat) -> Void)``` 
+use this to customize your rendering option for e.g. to fade in the items or fade out
+*  ```bottomToTopStopAtCenter(holdForSeconds seconds: TimeInterval)``` 
+this can be used to create the mostly in TV used Ticker where the Ticker node appears at the bottom, when reaching center stayes there for some time and continues to the top
+
 ## 1.4.3
 
 - Add support for iOS 9
