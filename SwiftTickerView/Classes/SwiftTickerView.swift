@@ -85,21 +85,6 @@ open class SwiftTickerView: GLKView {
     
     private var decorators = [Decorator]()
     
-    @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
-    public enum Direction {
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.rightToLeft")
-        case horizontalRightToLeft
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.leftToRight")
-        case horizontalLeftToRight
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.topToBottom")
-        case verticalTopToBottom
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.bottomToTop")
-        case verticalBottomToTop
-    }
-    
-    @available(*, unavailable, renamed: "render")
-    public var direction: Direction?
-    
     /**
      Assign a custom renderer to allow the content to be rendered on the ticker view.
      Default is rightToLeft
