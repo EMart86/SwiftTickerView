@@ -6,7 +6,7 @@
 //
 //
 
-import GLKit
+import UIKit
 
 public protocol SwiftTickerProviderProtocol {
     var hasContent: Bool { get }
@@ -56,7 +56,7 @@ public typealias Action = (Renderer, SwiftTickerView) -> ReturnBehavior
 
 public protocol SwiftTickerItemDecorator { }
 
-open class SwiftTickerView: GLKView {
+open class SwiftTickerView: UIView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
     
@@ -158,7 +158,6 @@ open class SwiftTickerView: GLKView {
     open override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupOpenGl()
         setupUI()
     }
     
@@ -322,25 +321,7 @@ open class SwiftTickerView: GLKView {
     
     //MARK: - Private
     
-    private func setupOpenGl() {
-        guard let context = loadEaglContext() else {
-            assertionFailure("EAGL context couldn't be loaded")
-            return
-        }
-        self.context = context
-        drawableColorFormat = .RGBA8888
-        EAGLContext.setCurrent(self.context)
-        enableSetNeedsDisplay = true
-        setNeedsDisplay()
-    }
-    
-    private func loadEaglContext() -> EAGLContext? {
-        return EAGLContext(api: .openGLES3) ?? EAGLContext(api: .openGLES2) ?? EAGLContext(api: .openGLES1)
-    }
-    
     private func setupUI() {
-        self.delegate = self
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(didBecomeActive:)),
                                                name: UIApplication.didBecomeActiveNotification,
@@ -466,8 +447,7 @@ open class SwiftTickerView: GLKView {
         guard isRunning else {
             return
         }
-        
-        display()
+        updateTickerNodeViewPosition()
     }
     
     private func update(node: UIView, offset: CGFloat) {
@@ -574,28 +554,5 @@ open class SwiftTickerView: GLKView {
         
         removeNodeIfNeeded(nodeViews.first?.view)
         addNewNodeIfNeeded()
-    }
-}
-
-extension SwiftTickerView: GLKViewDelegate {
-    public func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        
-        backgroundColor?.getRed(&r,
-                                green: &g,
-                                blue: &b,
-                                alpha: &a)
-        
-        
-        glClearColor(GLfloat(r),
-                     GLfloat(g),
-                     GLfloat(b),
-                     GLfloat(a))
-        glClear(GLbitfield(GL_COLOR_BUFFER_BIT));
-        
-        updateTickerNodeViewPosition()
     }
 }
