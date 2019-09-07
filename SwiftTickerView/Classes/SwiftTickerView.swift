@@ -10,7 +10,7 @@ import GLKit
 
 public protocol SwiftTickerProviderProtocol {
     var hasContent: Bool { get }
-    var next: Any { get }
+    var nextObject: Any { get }
 }
 
 public protocol SwiftTickerDelegate: class {
@@ -552,7 +552,7 @@ open class SwiftTickerView: GLKView {
         }
         lastNodeWasSeparator = false
         
-        if let content = contentProvider?.next,
+        if let content = contentProvider?.nextObject,
             let nodeView = viewProvider?.tickerView(self, viewFor: content) {
             addNode(nodeView.0,
                     for: nodeView.reuseIdentifier ?? dontReuseIdentifier,
