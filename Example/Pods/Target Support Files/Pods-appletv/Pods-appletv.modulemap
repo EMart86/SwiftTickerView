@@ -1,0 +1,6 @@
+framework module Pods_appletv {
+  umbrella header "Pods-appletv-umbrella.h"
+
+  export *
+  module * { export * }
+}

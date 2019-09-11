@@ -260,7 +260,7 @@ open class SwiftTickerView: UIView {
      - Return: dequed or created separator view
      */
     open func dequeueReusableSeparator() -> UIView? {
-        if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
+        if let index = reusableSeparatorViews.firstIndex(where: { $0.key == separatorIdentifier }) {
             let view = reusableSeparatorViews[index].view
             reusableSeparatorViews.remove(at: index)
             return view
@@ -284,7 +284,7 @@ open class SwiftTickerView: UIView {
      - Return: dequed or created separator view
      */
     open func dequeReusableNodeView(for identifier: String) -> UIView? {
-        if let index = reusableNodeViews.index(where: { $0.key == identifier }) {
+        if let index = reusableNodeViews.firstIndex(where: { $0.key == identifier }) {
             let view = reusableNodeViews[index].view
             reusableNodeViews.remove(at: index)
             return view
@@ -479,7 +479,7 @@ open class SwiftTickerView: UIView {
     }
     
     private func removeNode(_ nodeView: UIView) {
-        if let index = nodeViews.index(where: { $0.view === nodeView }) {
+        if let index = nodeViews.firstIndex(where: { $0.view === nodeView }) {
             let nodeView = nodeViews[index]
             if nodeView.key == separatorIdentifier {
                 reusableSeparatorViews.append((nodeView.key, nodeView.view))
@@ -491,7 +491,7 @@ open class SwiftTickerView: UIView {
         }
     }
     
-    private func addNewNodeIfNeeded() -> Bool {
+    @discardableResult private func addNewNodeIfNeeded() -> Bool {
         guard shouldAddView else {
             return false
         }

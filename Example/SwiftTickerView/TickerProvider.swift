@@ -28,7 +28,7 @@ final class TickerProvider: SwiftTickerProviderProtocol {
     }
     
     var hasContent = true
-    var next: Any {
+    var nextObject: Any {
         if index >= content.count {
             index = 0
         }

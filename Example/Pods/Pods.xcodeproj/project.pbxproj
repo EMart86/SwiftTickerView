@@ -1,0 +1,1282 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0F5BCF261B25840324A9EC30EED2955E /* SwiftTickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D93AB5B708D9573D27D1C5E2C79E7D /* SwiftTickerView.swift */; };
+		11A3405F2C683EC41B30891884B79894 /* SwiftTickerView-iOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 661973A448FC26CBAC07C2C4D9287FE6 /* SwiftTickerView-iOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		17D80690F5E709CA4C94E8577A38884B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B712C7D27EB7CD8F8A18A3EDE52765C0 /* Foundation.framework */; };
+		1E919007B639A75D55665604EDDC19A2 /* Pods-SwiftTickerView_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 66326385767EF5BCA006A06E509FF83C /* Pods-SwiftTickerView_Tests-dummy.m */; };
+		2999C350D3941A631016F5C0A56E0AF1 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B090B0767162BF69EF20C2228B9247 /* Renderer.swift */; };
+		2D109C5DE2452C9FD0BC9548FCCB3C96 /* DefaultConditionBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1B86324ED258C08769AA54EFD6067B /* DefaultConditionBehaviour.swift */; };
+		34336CC0C0898E75EBBA77D0A2293646 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B712C7D27EB7CD8F8A18A3EDE52765C0 /* Foundation.framework */; };
+		368C6CDB5F9AFDEC1A3D73BC3441B7CE /* Pods-SwiftTickerView_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FE541191B5405E3D6E76DC5AE20F8EE /* Pods-SwiftTickerView_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		37F5D40777CB9C9023F0C7E0066DDB95 /* SwiftTickerItemDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511D3004B94D2198A6379AD009CB67E5 /* SwiftTickerItemDecorator.swift */; };
+		3F2DC2A16BD4B2411315D0F7AE4348EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D50031945639C9CFCD3CBF24E18561 /* Foundation.framework */; };
+		3FEE47FF16E4197108B94ED4DC36DB74 /* Pods-SwiftTickerView_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CCFEE28E53196DFB47CDD19D84347CF /* Pods-SwiftTickerView_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		434235D123AE77032E2ABB8CF6E38682 /* SwiftTickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D93AB5B708D9573D27D1C5E2C79E7D /* SwiftTickerView.swift */; };
+		6477858DB118BCAA3EC75133EE92493C /* SwiftTickerItemDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 511D3004B94D2198A6379AD009CB67E5 /* SwiftTickerItemDecorator.swift */; };
+		64B0DF1D4F4AB63ECC1B2A288C6DD298 /* SwiftTickerView-tvOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4B07AE675E6D0D40745F41BEC92B54 /* SwiftTickerView-tvOS-dummy.m */; };
+		6AB883FB2A4C882BF5C15726F46216F2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B712C7D27EB7CD8F8A18A3EDE52765C0 /* Foundation.framework */; };
+		73A887682B859C876D04ABB08796E9DF /* Pods-appletv-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EAD0A3F4CE8EDFC9E88C3F6550150BA3 /* Pods-appletv-dummy.m */; };
+		9E9C240D9CE00FA48306323A0D1EE773 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B090B0767162BF69EF20C2228B9247 /* Renderer.swift */; };
+		B0F87A2B27EA921BAE78A97DFFD05220 /* SwiftTickerView-tvOS-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AF58D1BB4B5B89C67540B09FC382A02 /* SwiftTickerView-tvOS-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B553C9ADD6172F1F4B6B56D26C618566 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D50031945639C9CFCD3CBF24E18561 /* Foundation.framework */; };
+		B6E876B21B9886EC6604303668AB9B2A /* Pods-appletvTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C2165C72619B3BA803FAEB6CC0CB08 /* Pods-appletvTests-dummy.m */; };
+		CD7BB65A82ADC3EDE824160561F4024E /* Pods-appletvTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BFA9650E2EFA6591097C90F251AAFC36 /* Pods-appletvTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CDA9C86D20F7C44D68AB4EAB7967082D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80D50031945639C9CFCD3CBF24E18561 /* Foundation.framework */; };
+		E371B7FCF24EEFE9905F09A7BCB36628 /* SwiftTickerView-iOS-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BC32C680EE85373060CFD41AE70F62D5 /* SwiftTickerView-iOS-dummy.m */; };
+		F496008EBFA4F66E47D700E9C86B1409 /* DefaultConditionBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1B86324ED258C08769AA54EFD6067B /* DefaultConditionBehaviour.swift */; };
+		FC3263414A18FAFE163F7F54E8CC85C1 /* Pods-SwiftTickerView_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1D4D03BF73C818773198379AC29240 /* Pods-SwiftTickerView_Example-dummy.m */; };
+		FD59D6C454D5417823F723178536EF4C /* Pods-appletv-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 39A0C7DC0811017C7E3C3893A534A788 /* Pods-appletv-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3F6F985CB94E44551CFDE2E5D8771EA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75F2327C3B02807325943CC706439956;
+			remoteInfo = "Pods-SwiftTickerView_Example";
+		};
+		584AC5D70B1E60C8E16F4FC3D4E0D9E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 97A77566F17CF48E55C4AAB1AAE6FC60;
+			remoteInfo = "Pods-appletv";
+		};
+		6ECC9A5721F2DE8321CB153CF0BD439F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3DC50CF46D68C8F33C9BB95366283252;
+			remoteInfo = "SwiftTickerView-tvOS";
+		};
+		7F83E924186F3B4FA124B50667AD30B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1BEC2D7D46C8E2C80BDE4DD802666C1D;
+			remoteInfo = "SwiftTickerView-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01C2165C72619B3BA803FAEB6CC0CB08 /* Pods-appletvTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-appletvTests-dummy.m"; sourceTree = "<group>"; };
+		107207F9C8613C2756E4836C2330E264 /* Pods-appletvTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-appletvTests.release.xcconfig"; sourceTree = "<group>"; };
+		1734658648397141A5199D1ACDD039D6 /* Pods_SwiftTickerView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftTickerView_Tests.framework; path = "Pods-SwiftTickerView_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		19EB06859658C027316EF3D2F524C1D7 /* SwiftTickerView-tvOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; name = "SwiftTickerView-tvOS.modulemap"; path = "../SwiftTickerView-tvOS/SwiftTickerView-tvOS.modulemap"; sourceTree = "<group>"; };
+		1A8C99DA2C3D80644C2A3FB926343BEC /* Pods-SwiftTickerView_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftTickerView_Tests-Info.plist"; sourceTree = "<group>"; };
+		1E9D054C02A9C9BF9C3122FB57BAD140 /* Pods-SwiftTickerView_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftTickerView_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		2647251DBE5689A3424FA565F430838A /* Pods-appletvTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-appletvTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		2CF7618ED2A226A824C5CADD4C40B545 /* SwiftTickerView-tvOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "SwiftTickerView-tvOS-Info.plist"; path = "../SwiftTickerView-tvOS/SwiftTickerView-tvOS-Info.plist"; sourceTree = "<group>"; };
+		39A0C7DC0811017C7E3C3893A534A788 /* Pods-appletv-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-appletv-umbrella.h"; sourceTree = "<group>"; };
+		3EB49703EFD720083A9B8418A9CD7135 /* Pods-SwiftTickerView_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SwiftTickerView_Tests.modulemap"; sourceTree = "<group>"; };
+		43B62F9CFFD9BB6E6B4D1DAAD00F041B /* Pods_SwiftTickerView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftTickerView_Example.framework; path = "Pods-SwiftTickerView_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		511D3004B94D2198A6379AD009CB67E5 /* SwiftTickerItemDecorator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftTickerItemDecorator.swift; path = Sources/SwiftTickerView/SwiftTickerItemDecorator.swift; sourceTree = "<group>"; };
+		56C64D54FABCBAE4144CC120A5031E2A /* Pods-appletv.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-appletv.modulemap"; sourceTree = "<group>"; };
+		5E73E0078E98A56605B06F27C5A29EB2 /* Pods_appletv.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_appletv.framework; path = "Pods-appletv.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FE541191B5405E3D6E76DC5AE20F8EE /* Pods-SwiftTickerView_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftTickerView_Tests-umbrella.h"; sourceTree = "<group>"; };
+		64282FA9DD26491932EECC0100F8385B /* Pods-SwiftTickerView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftTickerView_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		64D93AB5B708D9573D27D1C5E2C79E7D /* SwiftTickerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftTickerView.swift; path = Sources/SwiftTickerView/SwiftTickerView.swift; sourceTree = "<group>"; };
+		661973A448FC26CBAC07C2C4D9287FE6 /* SwiftTickerView-iOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftTickerView-iOS-umbrella.h"; sourceTree = "<group>"; };
+		66326385767EF5BCA006A06E509FF83C /* Pods-SwiftTickerView_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftTickerView_Tests-dummy.m"; sourceTree = "<group>"; };
+		67398684B3684D644C006B5996F658D2 /* Pods-SwiftTickerView_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftTickerView_Example-Info.plist"; sourceTree = "<group>"; };
+		6D2835F85675B08193F69AA792A7899F /* Pods-appletv-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-appletv-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6D51EDBB6199FDE30D583B58A15ED42A /* SwiftTickerView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftTickerView.framework; path = "SwiftTickerView-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E118EB99A9B8B0265AAEC81F3BAD219 /* Pods-appletv-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-appletv-Info.plist"; sourceTree = "<group>"; };
+		70AC97FF496375914D48EDE1D3267D24 /* SwiftTickerView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftTickerView.framework; path = "SwiftTickerView-tvOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		71FF14FE40E9D2FE91CE28D1E6FBDA21 /* Pods-SwiftTickerView_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftTickerView_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
+		74B090B0767162BF69EF20C2228B9247 /* Renderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Renderer.swift; path = Sources/SwiftTickerView/Renderer.swift; sourceTree = "<group>"; };
+		75DF2F1E02398A5DDFA0B38930B9B8EA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		766B75C16F64C0BBABA672102C000DB1 /* Pods-appletv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-appletv.release.xcconfig"; sourceTree = "<group>"; };
+		7BC269E743BB1D40024555433ECB98AB /* SwiftTickerView-iOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftTickerView-iOS-prefix.pch"; sourceTree = "<group>"; };
+		7BDD1D1DC1B697968F750D1458BBB1F2 /* SwiftTickerView.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SwiftTickerView.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		7CCFEE28E53196DFB47CDD19D84347CF /* Pods-SwiftTickerView_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftTickerView_Example-umbrella.h"; sourceTree = "<group>"; };
+		80D50031945639C9CFCD3CBF24E18561 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		815003D23BB5C88437F4A3980FC54336 /* Pods-appletv-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-appletv-frameworks.sh"; sourceTree = "<group>"; };
+		84E49895DF51E038AD87C3B681103568 /* Pods_appletvTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_appletvTests.framework; path = "Pods-appletvTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AF58D1BB4B5B89C67540B09FC382A02 /* SwiftTickerView-tvOS-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SwiftTickerView-tvOS-umbrella.h"; path = "../SwiftTickerView-tvOS/SwiftTickerView-tvOS-umbrella.h"; sourceTree = "<group>"; };
+		90B3C9639E1D3B7A3808E376BB8E4AFA /* Pods-appletv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-appletv.debug.xcconfig"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A08CEFAE68D4FBE1443BE2641C18BFB4 /* SwiftTickerView-iOS.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "SwiftTickerView-iOS.xcconfig"; sourceTree = "<group>"; };
+		A392BC3D78241E71F1459C8FEB95C8B7 /* Pods-appletvTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-appletvTests.modulemap"; sourceTree = "<group>"; };
+		A45CF46F3A478AE131AB18598CEBD9A3 /* Pods-appletvTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-appletvTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A549C06914D5B00EB938433DFCBF1BC0 /* Pods-SwiftTickerView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftTickerView_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		A619EBAAF67FE2580A139F078FBBBBB4 /* Pods-SwiftTickerView_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftTickerView_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		A6CFA45980B9CA0FFB4A76E45018414F /* Pods-appletv-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-appletv-acknowledgements.plist"; sourceTree = "<group>"; };
+		A7DA1D0B02BB98B5B4443AD67E9428CA /* Pods-SwiftTickerView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftTickerView_Example.release.xcconfig"; sourceTree = "<group>"; };
+		B712C7D27EB7CD8F8A18A3EDE52765C0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		BB1D4D03BF73C818773198379AC29240 /* Pods-SwiftTickerView_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftTickerView_Example-dummy.m"; sourceTree = "<group>"; };
+		BB664B9440B6E615F52DD98176A200FE /* SwiftTickerView-iOS.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "SwiftTickerView-iOS.modulemap"; sourceTree = "<group>"; };
+		BC32C680EE85373060CFD41AE70F62D5 /* SwiftTickerView-iOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftTickerView-iOS-dummy.m"; sourceTree = "<group>"; };
+		BCC55B7E559EC4011D8382F7357B866C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		BFA9650E2EFA6591097C90F251AAFC36 /* Pods-appletvTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-appletvTests-umbrella.h"; sourceTree = "<group>"; };
+		CE2A48AB72BC8FD78379AAD31C93C6CA /* Pods-SwiftTickerView_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftTickerView_Example-frameworks.sh"; sourceTree = "<group>"; };
+		E224EB6E4FB63F38D4B19032537CCC82 /* SwiftTickerView-iOS-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftTickerView-iOS-Info.plist"; sourceTree = "<group>"; };
+		E8B2510D86C4AA940CFA1445AD8B6A72 /* Pods-SwiftTickerView_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-SwiftTickerView_Example.modulemap"; sourceTree = "<group>"; };
+		EAD0A3F4CE8EDFC9E88C3F6550150BA3 /* Pods-appletv-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-appletv-dummy.m"; sourceTree = "<group>"; };
+		EF1B86324ED258C08769AA54EFD6067B /* DefaultConditionBehaviour.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DefaultConditionBehaviour.swift; path = Sources/SwiftTickerView/DefaultConditionBehaviour.swift; sourceTree = "<group>"; };
+		F1438A5C7DAF92A9A01B6261C645A497 /* SwiftTickerView-tvOS.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "SwiftTickerView-tvOS.xcconfig"; path = "../SwiftTickerView-tvOS/SwiftTickerView-tvOS.xcconfig"; sourceTree = "<group>"; };
+		F16DCAD1AB7A3B98C127AC2363A8A5F1 /* SwiftTickerView-tvOS-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SwiftTickerView-tvOS-prefix.pch"; path = "../SwiftTickerView-tvOS/SwiftTickerView-tvOS-prefix.pch"; sourceTree = "<group>"; };
+		F57E79DB37EAD5B8902243DC188D54B3 /* Pods-SwiftTickerView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftTickerView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		F96DD92D118D3143B774FE3D9F2F6184 /* Pods-SwiftTickerView_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftTickerView_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
+		FD4B07AE675E6D0D40745F41BEC92B54 /* SwiftTickerView-tvOS-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "SwiftTickerView-tvOS-dummy.m"; path = "../SwiftTickerView-tvOS/SwiftTickerView-tvOS-dummy.m"; sourceTree = "<group>"; };
+		FEF7D750119D7CA617EEDF75B40C4329 /* Pods-appletvTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-appletvTests-Info.plist"; sourceTree = "<group>"; };
+		FF92187AEE8FD66FBC29667EBDC2B1BD /* Pods-appletvTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-appletvTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		11AD2278C3D3AACCEDEC1C4B0D307542 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34336CC0C0898E75EBBA77D0A2293646 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		368542CB0EABE5F384899D9FA675C24A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F2DC2A16BD4B2411315D0F7AE4348EF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F175F512B44F2F25356EAA2FCC38698 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDA9C86D20F7C44D68AB4EAB7967082D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9AFA220D87D8A0947DB6D3A3969F40D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6AB883FB2A4C882BF5C15726F46216F2 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD39C0DDBA716B3CF5C340D9B65266AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17D80690F5E709CA4C94E8577A38884B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EEF90CF0D7077729E424F30DA8792B57 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B553C9ADD6172F1F4B6B56D26C618566 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		31DE99FE43E8C8796974C2E8C990BC02 /* SwiftTickerView */ = {
+			isa = PBXGroup;
+			children = (
+				EF1B86324ED258C08769AA54EFD6067B /* DefaultConditionBehaviour.swift */,
+				74B090B0767162BF69EF20C2228B9247 /* Renderer.swift */,
+				511D3004B94D2198A6379AD009CB67E5 /* SwiftTickerItemDecorator.swift */,
+				64D93AB5B708D9573D27D1C5E2C79E7D /* SwiftTickerView.swift */,
+				903261E0CB5348D0FEFA0E0F16FA6E12 /* Pod */,
+				59AFDC10409BC5A5B374FA758E1C2486 /* Support Files */,
+			);
+			name = SwiftTickerView;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		477311DBF3DB0A326756DA68B7801D55 /* Pods-appletv */ = {
+			isa = PBXGroup;
+			children = (
+				56C64D54FABCBAE4144CC120A5031E2A /* Pods-appletv.modulemap */,
+				6D2835F85675B08193F69AA792A7899F /* Pods-appletv-acknowledgements.markdown */,
+				A6CFA45980B9CA0FFB4A76E45018414F /* Pods-appletv-acknowledgements.plist */,
+				EAD0A3F4CE8EDFC9E88C3F6550150BA3 /* Pods-appletv-dummy.m */,
+				815003D23BB5C88437F4A3980FC54336 /* Pods-appletv-frameworks.sh */,
+				6E118EB99A9B8B0265AAEC81F3BAD219 /* Pods-appletv-Info.plist */,
+				39A0C7DC0811017C7E3C3893A534A788 /* Pods-appletv-umbrella.h */,
+				90B3C9639E1D3B7A3808E376BB8E4AFA /* Pods-appletv.debug.xcconfig */,
+				766B75C16F64C0BBABA672102C000DB1 /* Pods-appletv.release.xcconfig */,
+			);
+			name = "Pods-appletv";
+			path = "Target Support Files/Pods-appletv";
+			sourceTree = "<group>";
+		};
+		59AFDC10409BC5A5B374FA758E1C2486 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				BB664B9440B6E615F52DD98176A200FE /* SwiftTickerView-iOS.modulemap */,
+				A08CEFAE68D4FBE1443BE2641C18BFB4 /* SwiftTickerView-iOS.xcconfig */,
+				BC32C680EE85373060CFD41AE70F62D5 /* SwiftTickerView-iOS-dummy.m */,
+				E224EB6E4FB63F38D4B19032537CCC82 /* SwiftTickerView-iOS-Info.plist */,
+				7BC269E743BB1D40024555433ECB98AB /* SwiftTickerView-iOS-prefix.pch */,
+				661973A448FC26CBAC07C2C4D9287FE6 /* SwiftTickerView-iOS-umbrella.h */,
+				19EB06859658C027316EF3D2F524C1D7 /* SwiftTickerView-tvOS.modulemap */,
+				F1438A5C7DAF92A9A01B6261C645A497 /* SwiftTickerView-tvOS.xcconfig */,
+				FD4B07AE675E6D0D40745F41BEC92B54 /* SwiftTickerView-tvOS-dummy.m */,
+				2CF7618ED2A226A824C5CADD4C40B545 /* SwiftTickerView-tvOS-Info.plist */,
+				F16DCAD1AB7A3B98C127AC2363A8A5F1 /* SwiftTickerView-tvOS-prefix.pch */,
+				8AF58D1BB4B5B89C67540B09FC382A02 /* SwiftTickerView-tvOS-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/SwiftTickerView-iOS";
+			sourceTree = "<group>";
+		};
+		71BF10D9671F60B91D333968CED34958 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				B712C7D27EB7CD8F8A18A3EDE52765C0 /* Foundation.framework */,
+			);
+			name = tvOS;
+			sourceTree = "<group>";
+		};
+		8910DE18F4068EE7F2F8E36E5101A369 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9A88CC71D6E55F0202A23277A509BCA0 /* iOS */,
+				71BF10D9671F60B91D333968CED34958 /* tvOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		903261E0CB5348D0FEFA0E0F16FA6E12 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				75DF2F1E02398A5DDFA0B38930B9B8EA /* LICENSE */,
+				BCC55B7E559EC4011D8382F7357B866C /* README.md */,
+				7BDD1D1DC1B697968F750D1458BBB1F2 /* SwiftTickerView.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		9A88CC71D6E55F0202A23277A509BCA0 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				80D50031945639C9CFCD3CBF24E18561 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		A448DC2C9953F4B97E6AE381414D347C /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				31DE99FE43E8C8796974C2E8C990BC02 /* SwiftTickerView */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		B3DBB083EB6F590471BDF29E1BFFD976 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E73E0078E98A56605B06F27C5A29EB2 /* Pods_appletv.framework */,
+				84E49895DF51E038AD87C3B681103568 /* Pods_appletvTests.framework */,
+				43B62F9CFFD9BB6E6B4D1DAAD00F041B /* Pods_SwiftTickerView_Example.framework */,
+				1734658648397141A5199D1ACDD039D6 /* Pods_SwiftTickerView_Tests.framework */,
+				6D51EDBB6199FDE30D583B58A15ED42A /* SwiftTickerView.framework */,
+				70AC97FF496375914D48EDE1D3267D24 /* SwiftTickerView.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B3FDC6D5118C04B9C9A87F9E6F3BF1A7 /* Pods-SwiftTickerView_Tests */ = {
+			isa = PBXGroup;
+			children = (
+				3EB49703EFD720083A9B8418A9CD7135 /* Pods-SwiftTickerView_Tests.modulemap */,
+				1E9D054C02A9C9BF9C3122FB57BAD140 /* Pods-SwiftTickerView_Tests-acknowledgements.markdown */,
+				F96DD92D118D3143B774FE3D9F2F6184 /* Pods-SwiftTickerView_Tests-acknowledgements.plist */,
+				66326385767EF5BCA006A06E509FF83C /* Pods-SwiftTickerView_Tests-dummy.m */,
+				1A8C99DA2C3D80644C2A3FB926343BEC /* Pods-SwiftTickerView_Tests-Info.plist */,
+				5FE541191B5405E3D6E76DC5AE20F8EE /* Pods-SwiftTickerView_Tests-umbrella.h */,
+				F57E79DB37EAD5B8902243DC188D54B3 /* Pods-SwiftTickerView_Tests.debug.xcconfig */,
+				A549C06914D5B00EB938433DFCBF1BC0 /* Pods-SwiftTickerView_Tests.release.xcconfig */,
+			);
+			name = "Pods-SwiftTickerView_Tests";
+			path = "Target Support Files/Pods-SwiftTickerView_Tests";
+			sourceTree = "<group>";
+		};
+		BCD82D9F15B79B9A86644A6F7ED444C7 /* Pods-appletvTests */ = {
+			isa = PBXGroup;
+			children = (
+				A392BC3D78241E71F1459C8FEB95C8B7 /* Pods-appletvTests.modulemap */,
+				FF92187AEE8FD66FBC29667EBDC2B1BD /* Pods-appletvTests-acknowledgements.markdown */,
+				2647251DBE5689A3424FA565F430838A /* Pods-appletvTests-acknowledgements.plist */,
+				01C2165C72619B3BA803FAEB6CC0CB08 /* Pods-appletvTests-dummy.m */,
+				FEF7D750119D7CA617EEDF75B40C4329 /* Pods-appletvTests-Info.plist */,
+				BFA9650E2EFA6591097C90F251AAFC36 /* Pods-appletvTests-umbrella.h */,
+				A45CF46F3A478AE131AB18598CEBD9A3 /* Pods-appletvTests.debug.xcconfig */,
+				107207F9C8613C2756E4836C2330E264 /* Pods-appletvTests.release.xcconfig */,
+			);
+			name = "Pods-appletvTests";
+			path = "Target Support Files/Pods-appletvTests";
+			sourceTree = "<group>";
+		};
+		C9D3FF176845BCB5C20545B6750DF795 /* Pods-SwiftTickerView_Example */ = {
+			isa = PBXGroup;
+			children = (
+				E8B2510D86C4AA940CFA1445AD8B6A72 /* Pods-SwiftTickerView_Example.modulemap */,
+				71FF14FE40E9D2FE91CE28D1E6FBDA21 /* Pods-SwiftTickerView_Example-acknowledgements.markdown */,
+				A619EBAAF67FE2580A139F078FBBBBB4 /* Pods-SwiftTickerView_Example-acknowledgements.plist */,
+				BB1D4D03BF73C818773198379AC29240 /* Pods-SwiftTickerView_Example-dummy.m */,
+				CE2A48AB72BC8FD78379AAD31C93C6CA /* Pods-SwiftTickerView_Example-frameworks.sh */,
+				67398684B3684D644C006B5996F658D2 /* Pods-SwiftTickerView_Example-Info.plist */,
+				7CCFEE28E53196DFB47CDD19D84347CF /* Pods-SwiftTickerView_Example-umbrella.h */,
+				64282FA9DD26491932EECC0100F8385B /* Pods-SwiftTickerView_Example.debug.xcconfig */,
+				A7DA1D0B02BB98B5B4443AD67E9428CA /* Pods-SwiftTickerView_Example.release.xcconfig */,
+			);
+			name = "Pods-SwiftTickerView_Example";
+			path = "Target Support Files/Pods-SwiftTickerView_Example";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				A448DC2C9953F4B97E6AE381414D347C /* Development Pods */,
+				8910DE18F4068EE7F2F8E36E5101A369 /* Frameworks */,
+				B3DBB083EB6F590471BDF29E1BFFD976 /* Products */,
+				E4B97873E8E0F0FF90B2D7ABD931C749 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		E4B97873E8E0F0FF90B2D7ABD931C749 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				477311DBF3DB0A326756DA68B7801D55 /* Pods-appletv */,
+				BCD82D9F15B79B9A86644A6F7ED444C7 /* Pods-appletvTests */,
+				C9D3FF176845BCB5C20545B6750DF795 /* Pods-SwiftTickerView_Example */,
+				B3FDC6D5118C04B9C9A87F9E6F3BF1A7 /* Pods-SwiftTickerView_Tests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		4DE4F2F9CD552A9CD270950FA2A13954 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD59D6C454D5417823F723178536EF4C /* Pods-appletv-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B88220B2A92C0FBD428CFE38E4C90CBD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11A3405F2C683EC41B30891884B79894 /* SwiftTickerView-iOS-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CFEA142727639F34F0158160451C74D0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0F87A2B27EA921BAE78A97DFFD05220 /* SwiftTickerView-tvOS-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6F4F531D8E5061DE5C5066AF1612890 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7BB65A82ADC3EDE824160561F4024E /* Pods-appletvTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F584A8A5B30C2B3481DA1C068FA4D5EC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				368C6CDB5F9AFDEC1A3D73BC3441B7CE /* Pods-SwiftTickerView_Tests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FEDF5DB2900B3800ADB4B43FA1EBC322 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FEE47FF16E4197108B94ED4DC36DB74 /* Pods-SwiftTickerView_Example-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		1BEC2D7D46C8E2C80BDE4DD802666C1D /* SwiftTickerView-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE71CF7496791B62E44D22FE52F8E63F /* Build configuration list for PBXNativeTarget "SwiftTickerView-iOS" */;
+			buildPhases = (
+				B88220B2A92C0FBD428CFE38E4C90CBD /* Headers */,
+				93F150EDCAA5D5E8E473F72A4EAB1562 /* Sources */,
+				5F175F512B44F2F25356EAA2FCC38698 /* Frameworks */,
+				8C00CD7157864EF77241E94B6D499C51 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftTickerView-iOS";
+			productName = "SwiftTickerView-iOS";
+			productReference = 6D51EDBB6199FDE30D583B58A15ED42A /* SwiftTickerView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3D6EAB9A48B8C239F8E06E837196D30D /* Pods-appletvTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02E05187C1BF95EB2D03C7E5EC2E7E7A /* Build configuration list for PBXNativeTarget "Pods-appletvTests" */;
+			buildPhases = (
+				E6F4F531D8E5061DE5C5066AF1612890 /* Headers */,
+				A1D454643B4044A9D1D4984FA27A35C8 /* Sources */,
+				BD39C0DDBA716B3CF5C340D9B65266AB /* Frameworks */,
+				BA5E4F97362CDD124571D86DB4F5599F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B1EDA6680389A903A7194F351F489C9E /* PBXTargetDependency */,
+			);
+			name = "Pods-appletvTests";
+			productName = "Pods-appletvTests";
+			productReference = 84E49895DF51E038AD87C3B681103568 /* Pods_appletvTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		3DC50CF46D68C8F33C9BB95366283252 /* SwiftTickerView-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AF715DD1EE9D5B99E1D2E7C41F2DEADD /* Build configuration list for PBXNativeTarget "SwiftTickerView-tvOS" */;
+			buildPhases = (
+				CFEA142727639F34F0158160451C74D0 /* Headers */,
+				3E9331F89C10BF656C046A50694AEB28 /* Sources */,
+				9AFA220D87D8A0947DB6D3A3969F40D4 /* Frameworks */,
+				6B75835FCBCAF11D640D6A4670A2582F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SwiftTickerView-tvOS";
+			productName = "SwiftTickerView-tvOS";
+			productReference = 70AC97FF496375914D48EDE1D3267D24 /* SwiftTickerView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		475B4322E16729E3A02036C5A7195E7D /* Pods-SwiftTickerView_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32DCE73B663B5C4D98505A2323A380C6 /* Build configuration list for PBXNativeTarget "Pods-SwiftTickerView_Tests" */;
+			buildPhases = (
+				F584A8A5B30C2B3481DA1C068FA4D5EC /* Headers */,
+				A501374FC7FC7C137210E815D327BDDC /* Sources */,
+				EEF90CF0D7077729E424F30DA8792B57 /* Frameworks */,
+				68429437878F2FF2313E93C26169FE74 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3A565B5C5DDDA15CDBB76C071A75C7C0 /* PBXTargetDependency */,
+			);
+			name = "Pods-SwiftTickerView_Tests";
+			productName = "Pods-SwiftTickerView_Tests";
+			productReference = 1734658648397141A5199D1ACDD039D6 /* Pods_SwiftTickerView_Tests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		75F2327C3B02807325943CC706439956 /* Pods-SwiftTickerView_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F39B59898979ED55854AC8D4F0957B6 /* Build configuration list for PBXNativeTarget "Pods-SwiftTickerView_Example" */;
+			buildPhases = (
+				FEDF5DB2900B3800ADB4B43FA1EBC322 /* Headers */,
+				A889C6DD04662200167994458199A6A4 /* Sources */,
+				368542CB0EABE5F384899D9FA675C24A /* Frameworks */,
+				DA20639793FB4C87974E89CC4E7250C6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D3707237D5F9EE6CBCCC7AE3048ECF2 /* PBXTargetDependency */,
+			);
+			name = "Pods-SwiftTickerView_Example";
+			productName = "Pods-SwiftTickerView_Example";
+			productReference = 43B62F9CFFD9BB6E6B4D1DAAD00F041B /* Pods_SwiftTickerView_Example.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		97A77566F17CF48E55C4AAB1AAE6FC60 /* Pods-appletv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0380EE00A02CCF5BA31A8F681116968C /* Build configuration list for PBXNativeTarget "Pods-appletv" */;
+			buildPhases = (
+				4DE4F2F9CD552A9CD270950FA2A13954 /* Headers */,
+				8CBACCCB8D1E7FE56272B70C744754DA /* Sources */,
+				11AD2278C3D3AACCEDEC1C4B0D307542 /* Frameworks */,
+				DF606BA9F6A5C9C7CF2D36D8DCA8C2B8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				56F2F57E05E8E107BE265A62105CE01E /* PBXTargetDependency */,
+			);
+			name = "Pods-appletv";
+			productName = "Pods-appletv";
+			productReference = 5E73E0078E98A56605B06F27C5A29EB2 /* Pods_appletv.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = B3DBB083EB6F590471BDF29E1BFFD976 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97A77566F17CF48E55C4AAB1AAE6FC60 /* Pods-appletv */,
+				3D6EAB9A48B8C239F8E06E837196D30D /* Pods-appletvTests */,
+				75F2327C3B02807325943CC706439956 /* Pods-SwiftTickerView_Example */,
+				475B4322E16729E3A02036C5A7195E7D /* Pods-SwiftTickerView_Tests */,
+				1BEC2D7D46C8E2C80BDE4DD802666C1D /* SwiftTickerView-iOS */,
+				3DC50CF46D68C8F33C9BB95366283252 /* SwiftTickerView-tvOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		68429437878F2FF2313E93C26169FE74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6B75835FCBCAF11D640D6A4670A2582F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8C00CD7157864EF77241E94B6D499C51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BA5E4F97362CDD124571D86DB4F5599F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA20639793FB4C87974E89CC4E7250C6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF606BA9F6A5C9C7CF2D36D8DCA8C2B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3E9331F89C10BF656C046A50694AEB28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D109C5DE2452C9FD0BC9548FCCB3C96 /* DefaultConditionBehaviour.swift in Sources */,
+				2999C350D3941A631016F5C0A56E0AF1 /* Renderer.swift in Sources */,
+				37F5D40777CB9C9023F0C7E0066DDB95 /* SwiftTickerItemDecorator.swift in Sources */,
+				64B0DF1D4F4AB63ECC1B2A288C6DD298 /* SwiftTickerView-tvOS-dummy.m in Sources */,
+				434235D123AE77032E2ABB8CF6E38682 /* SwiftTickerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8CBACCCB8D1E7FE56272B70C744754DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73A887682B859C876D04ABB08796E9DF /* Pods-appletv-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93F150EDCAA5D5E8E473F72A4EAB1562 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F496008EBFA4F66E47D700E9C86B1409 /* DefaultConditionBehaviour.swift in Sources */,
+				9E9C240D9CE00FA48306323A0D1EE773 /* Renderer.swift in Sources */,
+				6477858DB118BCAA3EC75133EE92493C /* SwiftTickerItemDecorator.swift in Sources */,
+				E371B7FCF24EEFE9905F09A7BCB36628 /* SwiftTickerView-iOS-dummy.m in Sources */,
+				0F5BCF261B25840324A9EC30EED2955E /* SwiftTickerView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1D454643B4044A9D1D4984FA27A35C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B6E876B21B9886EC6604303668AB9B2A /* Pods-appletvTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A501374FC7FC7C137210E815D327BDDC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E919007B639A75D55665604EDDC19A2 /* Pods-SwiftTickerView_Tests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A889C6DD04662200167994458199A6A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC3263414A18FAFE163F7F54E8CC85C1 /* Pods-SwiftTickerView_Example-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3A565B5C5DDDA15CDBB76C071A75C7C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-SwiftTickerView_Example";
+			target = 75F2327C3B02807325943CC706439956 /* Pods-SwiftTickerView_Example */;
+			targetProxy = 3F6F985CB94E44551CFDE2E5D8771EA1 /* PBXContainerItemProxy */;
+		};
+		3D3707237D5F9EE6CBCCC7AE3048ECF2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftTickerView-iOS";
+			target = 1BEC2D7D46C8E2C80BDE4DD802666C1D /* SwiftTickerView-iOS */;
+			targetProxy = 7F83E924186F3B4FA124B50667AD30B6 /* PBXContainerItemProxy */;
+		};
+		56F2F57E05E8E107BE265A62105CE01E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SwiftTickerView-tvOS";
+			target = 3DC50CF46D68C8F33C9BB95366283252 /* SwiftTickerView-tvOS */;
+			targetProxy = 6ECC9A5721F2DE8321CB153CF0BD439F /* PBXContainerItemProxy */;
+		};
+		B1EDA6680389A903A7194F351F489C9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-appletv";
+			target = 97A77566F17CF48E55C4AAB1AAE6FC60 /* Pods-appletv */;
+			targetProxy = 584AC5D70B1E60C8E16F4FC3D4E0D9E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0E65232F7EA23727496711016A4D1902 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		1C2E3CBE56E6ACA61CC78A03FC72EFBC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A08CEFAE68D4FBE1443BE2641C18BFB4 /* SwiftTickerView-iOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftTickerView-iOS/SwiftTickerView-iOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftTickerView-iOS/SwiftTickerView-iOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftTickerView-iOS/SwiftTickerView-iOS.modulemap";
+				PRODUCT_MODULE_NAME = SwiftTickerView;
+				PRODUCT_NAME = SwiftTickerView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		1D0B52912FABA52961FD6DD0BE07F0E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1438A5C7DAF92A9A01B6261C645A497 /* SwiftTickerView-tvOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftTickerView-tvOS/SwiftTickerView-tvOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftTickerView-tvOS/SwiftTickerView-tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftTickerView-tvOS/SwiftTickerView-tvOS.modulemap";
+				PRODUCT_MODULE_NAME = SwiftTickerView;
+				PRODUCT_NAME = SwiftTickerView;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		200B6C98B36CFF80738D40028FAA551C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A45CF46F3A478AE131AB18598CEBD9A3 /* Pods-appletvTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-appletvTests/Pods-appletvTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-appletvTests/Pods-appletvTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		455308AC6D08ECB1047C5ADAF92B147D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A549C06914D5B00EB938433DFCBF1BC0 /* Pods-SwiftTickerView_Tests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftTickerView_Tests/Pods-SwiftTickerView_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftTickerView_Tests/Pods-SwiftTickerView_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		49BD938D0C783CB22EA0CB71161AA2B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1438A5C7DAF92A9A01B6261C645A497 /* SwiftTickerView-tvOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftTickerView-tvOS/SwiftTickerView-tvOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftTickerView-tvOS/SwiftTickerView-tvOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftTickerView-tvOS/SwiftTickerView-tvOS.modulemap";
+				PRODUCT_MODULE_NAME = SwiftTickerView;
+				PRODUCT_NAME = SwiftTickerView;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		578FF7EAC62CBBB85FB186C1F01785ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F57E79DB37EAD5B8902243DC188D54B3 /* Pods-SwiftTickerView_Tests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftTickerView_Tests/Pods-SwiftTickerView_Tests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftTickerView_Tests/Pods-SwiftTickerView_Tests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8A750EF41DF7B7A7C2CCCC8ABEE81016 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A08CEFAE68D4FBE1443BE2641C18BFB4 /* SwiftTickerView-iOS.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftTickerView-iOS/SwiftTickerView-iOS-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftTickerView-iOS/SwiftTickerView-iOS-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftTickerView-iOS/SwiftTickerView-iOS.modulemap";
+				PRODUCT_MODULE_NAME = SwiftTickerView;
+				PRODUCT_NAME = SwiftTickerView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AE202C619130243FE737C03677A8B7F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7DA1D0B02BB98B5B4443AD67E9428CA /* Pods-SwiftTickerView_Example.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BCD5FE8D3BAB6BCFE1DAC5B074E90AA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 107207F9C8613C2756E4836C2330E264 /* Pods-appletvTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-appletvTests/Pods-appletvTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-appletvTests/Pods-appletvTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		BDE982FE2E6F2590967BBFB2E7B392CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90B3C9639E1D3B7A3808E376BB8E4AFA /* Pods-appletv.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-appletv/Pods-appletv-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-appletv/Pods-appletv.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C4199FCAEEE5819E0D995E325A3FAF1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		D807C2014AAB415DC8AC2C51D6737BAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64282FA9DD26491932EECC0100F8385B /* Pods-SwiftTickerView_Example.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		F610C57430CDE74FAC2A6FE84144E148 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 766B75C16F64C0BBABA672102C000DB1 /* Pods-appletv.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-appletv/Pods-appletv-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-appletv/Pods-appletv.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02E05187C1BF95EB2D03C7E5EC2E7E7A /* Build configuration list for PBXNativeTarget "Pods-appletvTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				200B6C98B36CFF80738D40028FAA551C /* Debug */,
+				BCD5FE8D3BAB6BCFE1DAC5B074E90AA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0380EE00A02CCF5BA31A8F681116968C /* Build configuration list for PBXNativeTarget "Pods-appletv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BDE982FE2E6F2590967BBFB2E7B392CA /* Debug */,
+				F610C57430CDE74FAC2A6FE84144E148 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F39B59898979ED55854AC8D4F0957B6 /* Build configuration list for PBXNativeTarget "Pods-SwiftTickerView_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D807C2014AAB415DC8AC2C51D6737BAC /* Debug */,
+				AE202C619130243FE737C03677A8B7F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32DCE73B663B5C4D98505A2323A380C6 /* Build configuration list for PBXNativeTarget "Pods-SwiftTickerView_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				578FF7EAC62CBBB85FB186C1F01785ED /* Debug */,
+				455308AC6D08ECB1047C5ADAF92B147D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4199FCAEEE5819E0D995E325A3FAF1C /* Debug */,
+				0E65232F7EA23727496711016A4D1902 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AF715DD1EE9D5B99E1D2E7C41F2DEADD /* Build configuration list for PBXNativeTarget "SwiftTickerView-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				49BD938D0C783CB22EA0CB71161AA2B2 /* Debug */,
+				1D0B52912FABA52961FD6DD0BE07F0E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE71CF7496791B62E44D22FE52F8E63F /* Build configuration list for PBXNativeTarget "SwiftTickerView-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A750EF41DF7B7A7C2CCCC8ABEE81016 /* Debug */,
+				1C2E3CBE56E6ACA61CC78A03FC72EFBC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

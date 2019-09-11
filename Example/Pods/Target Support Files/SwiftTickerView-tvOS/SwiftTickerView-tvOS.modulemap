@@ -1,0 +1,6 @@
+framework module SwiftTickerView {
+  umbrella header "SwiftTickerView-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
