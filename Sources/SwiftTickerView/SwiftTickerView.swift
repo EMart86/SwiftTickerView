@@ -6,11 +6,11 @@
 //
 //
 
-import GLKit
+import UIKit
 
 public protocol SwiftTickerProviderProtocol {
     var hasContent: Bool { get }
-    var next: Any { get }
+    var nextObject: Any { get }
 }
 
 public protocol SwiftTickerDelegate: class {
@@ -56,7 +56,7 @@ public typealias Action = (Renderer, SwiftTickerView) -> ReturnBehavior
 
 public protocol SwiftTickerItemDecorator { }
 
-open class SwiftTickerView: GLKView {
+open class SwiftTickerView: UIView {
     private let separatorIdentifier = "SeparatorIdentifier"
     private let dontReuseIdentifier = "DontReuseIdentifier"
     
@@ -84,21 +84,6 @@ open class SwiftTickerView: GLKView {
     }
     
     private var decorators = [Decorator]()
-    
-    @available(*, deprecated: 1.0.0, renamed: "SwiftTickerView")
-    public enum Direction {
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.rightToLeft")
-        case horizontalRightToLeft
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.leftToRight")
-        case horizontalLeftToRight
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.topToBottom")
-        case verticalTopToBottom
-        @available(*, unavailable, renamed: "SwiftTickerView.Renderer.bottomToTop")
-        case verticalBottomToTop
-    }
-    
-    @available(*, unavailable, renamed: "render")
-    public var direction: Direction?
     
     /**
      Assign a custom renderer to allow the content to be rendered on the ticker view.
@@ -173,7 +158,6 @@ open class SwiftTickerView: GLKView {
     open override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupOpenGl()
         setupUI()
     }
     
@@ -276,7 +260,7 @@ open class SwiftTickerView: GLKView {
      - Return: dequed or created separator view
      */
     open func dequeueReusableSeparator() -> UIView? {
-        if let index = reusableSeparatorViews.index(where: { $0.key == separatorIdentifier }) {
+        if let index = reusableSeparatorViews.firstIndex(where: { $0.key == separatorIdentifier }) {
             let view = reusableSeparatorViews[index].view
             reusableSeparatorViews.remove(at: index)
             return view
@@ -300,7 +284,7 @@ open class SwiftTickerView: GLKView {
      - Return: dequed or created separator view
      */
     open func dequeReusableNodeView(for identifier: String) -> UIView? {
-        if let index = reusableNodeViews.index(where: { $0.key == identifier }) {
+        if let index = reusableNodeViews.firstIndex(where: { $0.key == identifier }) {
             let view = reusableNodeViews[index].view
             reusableNodeViews.remove(at: index)
             return view
@@ -337,25 +321,7 @@ open class SwiftTickerView: GLKView {
     
     //MARK: - Private
     
-    private func setupOpenGl() {
-        guard let context = loadEaglContext() else {
-            assertionFailure("EAGL context couldn't be loaded")
-            return
-        }
-        self.context = context
-        drawableColorFormat = .RGBA8888
-        EAGLContext.setCurrent(self.context)
-        enableSetNeedsDisplay = true
-        setNeedsDisplay()
-    }
-    
-    private func loadEaglContext() -> EAGLContext? {
-        return EAGLContext(api: .openGLES3) ?? EAGLContext(api: .openGLES2) ?? EAGLContext(api: .openGLES1)
-    }
-    
     private func setupUI() {
-        self.delegate = self
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(application(didBecomeActive:)),
                                                name: UIApplication.didBecomeActiveNotification,
@@ -481,8 +447,7 @@ open class SwiftTickerView: GLKView {
         guard isRunning else {
             return
         }
-        
-        display()
+        updateTickerNodeViewPosition()
     }
     
     private func update(node: UIView, offset: CGFloat) {
@@ -514,7 +479,7 @@ open class SwiftTickerView: GLKView {
     }
     
     private func removeNode(_ nodeView: UIView) {
-        if let index = nodeViews.index(where: { $0.view === nodeView }) {
+        if let index = nodeViews.firstIndex(where: { $0.view === nodeView }) {
             let nodeView = nodeViews[index]
             if nodeView.key == separatorIdentifier {
                 reusableSeparatorViews.append((nodeView.key, nodeView.view))
@@ -526,7 +491,7 @@ open class SwiftTickerView: GLKView {
         }
     }
     
-    private func addNewNodeIfNeeded() -> Bool {
+    @discardableResult private func addNewNodeIfNeeded() -> Bool {
         guard shouldAddView else {
             return false
         }
@@ -552,7 +517,7 @@ open class SwiftTickerView: GLKView {
         }
         lastNodeWasSeparator = false
         
-        if let content = contentProvider?.next,
+        if let content = contentProvider?.nextObject,
             let nodeView = viewProvider?.tickerView(self, viewFor: content) {
             addNode(nodeView.0,
                     for: nodeView.reuseIdentifier ?? dontReuseIdentifier,
@@ -589,28 +554,5 @@ open class SwiftTickerView: GLKView {
         
         removeNodeIfNeeded(nodeViews.first?.view)
         addNewNodeIfNeeded()
-    }
-}
-
-extension SwiftTickerView: GLKViewDelegate {
-    public func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        
-        backgroundColor?.getRed(&r,
-                                green: &g,
-                                blue: &b,
-                                alpha: &a)
-        
-        
-        glClearColor(GLfloat(r),
-                     GLfloat(g),
-                     GLfloat(b),
-                     GLfloat(a))
-        glClear(GLbitfield(GL_COLOR_BUFFER_BIT));
-        
-        updateTickerNodeViewPosition()
     }
 }

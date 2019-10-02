@@ -584,7 +584,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-appletv/Pods-appletv-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-appletv/Pods-appletv-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SwiftTickerView-tvOS/SwiftTickerView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -593,7 +593,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-appletv/Pods-appletv-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-appletv/Pods-appletv-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6F50D98BE4D17AAB58565E55 /* [CP] Check Pods Manifest.lock */ = {
@@ -620,7 +620,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SwiftTickerView-iOS/SwiftTickerView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -629,7 +629,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftTickerView_Example/Pods-SwiftTickerView_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
